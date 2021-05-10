@@ -1,12 +1,16 @@
 import defaultState from './state'
+import { SET_LOGIN_STATE } from './actions'
 function reducer(state = defaultState, action) {
-  switch (action.type) {
-    case 'LOG_IN':
-      return {...state, isLoggedIn: true}
-    
+    //console.log(state)
+    switch (action.type) {
+    case SET_LOGIN_STATE:
+        //console.log(action.payload)
+        console.log(state)
+        return {...state, ...action.payload, isLoggedIn: true}
     default:
-      return state
-  }
+        //console.log(state)
+        return state
+    }
 }
 
 export default reducer

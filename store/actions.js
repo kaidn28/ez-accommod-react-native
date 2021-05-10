@@ -1,13 +1,28 @@
+import userServices from "../api/services/userServices"
+
 export const UPDATE_INFOR = 'UPDATE_INFOR'
-export const GET_DATA = 'GET_DATA'
-export const ADD_EMPLOYEE = 'ADD_EMPLOYEE'
-export const DATA_REQ_SENT = 'DATA_REQ_SENT'
-export const DATA_REQ_SUCCEED = 'DATA_REQ_SUCCEED'
-export const DATA_REQ_FAILED = 'DATA_REQ_FAILED'
 export const LOG_IN = 'LOG_IN'
+export const SET_LOGIN_STATE = 'SET_LOGIN_STATE'
+export const GET_USER = 'GET_USER'
+export const updateInfor = (payload) => ({type: UPDATE_INFOR, payload})
 
-export const updateInfor = (infor) => ({type: UPDATE_INFOR, payload: infor})
+export const setLoginState = (loginData) => {
+    //console.log(loginData)
+    return {
+        type: SET_LOGIN_STATE,
+        payload: loginData
+    }
+}
+export const login = (payload) => {
+    const {email, password} = payload
+    //console.log(email + '1')
+    return async (dispatch) => {
+        //console.log(email + '2')
+        return userServices.login(payload)
+                .then(res =>
+                    dispatch(setLoginState(res.data.data))
+                )
+                .catch(err => console.log(err))   
+    }
+}
 
-export const addEmployee = (infor) => ({type: ADD_EMPLOYEE, payload: infor})
-
-export const login = () => ({type: LOG_IN})

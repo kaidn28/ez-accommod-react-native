@@ -4,7 +4,8 @@ import {
     API_LOGIN,
     API_LOGIN_FACEBOOK,
     API_GET_NOTIF,
-    API_READ_ALL_NOTIF
+    API_READ_ALL_NOTIF,
+    API_USER
 } from '../apiUrl'
 
 import axios from 'axios'
@@ -19,8 +20,9 @@ export default {
         return axios.post(API_LOGIN, payload)
     },
 
-    getUserProfile (payload) {
+    getUserProfile (id) {
         // return axios.get(API_GET_ROOM_LIST)
+        return axios.get(`${API_USER + id}`)
     },
 
     loginWithFacebook (payload) {

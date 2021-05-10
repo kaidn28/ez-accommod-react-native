@@ -9,6 +9,7 @@ const UserStackNav = createStackNavigator()
 
 function UserStackNavConfigs(props){
     const isLoggedIn = useSelector(state => state.isLoggedIn)
+    //console.log(isLoggedIn)
     return (
         <UserStackNav.Navigator
             initialRouteName= "Login"

@@ -1,15 +1,30 @@
 import React from 'react'
-import { Text, View, Button } from 'react-native'
+import { Text, View, Button, TextInput } from 'react-native'
 import store from '../../store/store'
 import {login} from '../../store/actions'
-const UserLoginScreen = () => {
-    return (
-        <View>
-            <Text> user login screen </Text>
-            <Button title="to user info" onPress={()=> store.dispatch(login())}/>
-        </View>
-
-        )
+class UserLoginScreen extends React.Component {
+    state = {
+        email: null,
+        password: null
+    }
+    submitLogin = ()=> {
+        const payload = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        store.dispatch(login(payload))
+    }
+    render(){
+        return (
+            <View>
+                <Text> Login </Text>
+                <TextInput placeholder="Username" onChangeText={email => this.setState({email})}/>
+                <TextInput placeholder="Password" onChangeText={password => this.setState({password})}/>
+                <Button title="to user info" onPress={this.submitLogin}/>
+            </View>
+    
+            )
+    } 
 }
 
 export default UserLoginScreen
