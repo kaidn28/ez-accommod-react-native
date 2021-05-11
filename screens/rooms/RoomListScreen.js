@@ -49,6 +49,11 @@ class RoomListScreen extends React.Component {
             const res = await roomServices.getRoomList(pagination)
             let roomResults = res.data.data.posts
 
+            /*
+            *   Set initial isFavorited boolean value:
+            *   - isFavorited flag is set if room is found in userFavoriteRooms array.
+            *   - store state userFavoriteRooms is mapped to this component's props
+            */
             roomResults = roomResults.map(e => {
                 let isFavorited = false
                 if (this.props.userFavoriteRooms && this.props.userFavoriteRooms.length) {
@@ -69,6 +74,11 @@ class RoomListScreen extends React.Component {
         }
     }
 
+    /*
+    *   Handle whether it should add new favorite room or delete existed one.
+    *   Nested navigators caused errors. 
+    *   Gonna fix that later. Now I left that commented out. 
+    */
     onToggleFavorite = (item) => {
         if (!this.props.isLoggedIn) {
             // this.props.navigation.navigate('User', { screen: 'Login' })

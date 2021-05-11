@@ -27,6 +27,11 @@ export const login = (payload) => {
                 .then(res => {
                         dispatch(setLoginState(res.data.data))
 
+                        /*
+                        *   Whenever login successfully, update new token.
+                        *   No longer need to attach Authorization header to each and every request,
+                        *   just use axios instance created at /api/axiosInstance
+                        */
                         axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.token}`
                     }
                 )
