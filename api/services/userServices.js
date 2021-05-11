@@ -8,8 +8,7 @@ import {
     API_USER
 } from '../apiUrl'
 
-import axios from 'axios'
-axios.defaults.baseURL = BASE_URL
+import axios from '../axiosInstance'
 
 export default {
     signup (payload) {

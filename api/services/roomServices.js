@@ -16,8 +16,7 @@ import {
     API_UPLOAD_IMAGE
 } from '../apiUrl'
 
-import axios from 'axios'
-axios.defaults.baseURL = BASE_URL
+import axios from '../axiosInstance'
 
 export default {
     getRoomList (payload) {
