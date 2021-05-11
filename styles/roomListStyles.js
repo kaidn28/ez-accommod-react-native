@@ -7,19 +7,26 @@ export default StyleSheet.create({
         borderColor: defaultColor.dark,
         borderRadius: defaultBorder.borderRadius,
         borderWidth: defaultBorder.borderWidth,
-        padding: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        paddingBottom: 15,
         margin: 10,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        width: 350
     },
     image: {
         height: 150,
         width: 250,
+        flex: 1
+    },
+    roomTypeContainer: {
+        marginTop: 10,
+        marginBottom: 10
     },
     roomType: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginTop: 10,
-        marginBottom: 10
     },
     address: {
         fontWeight: '700'
@@ -40,6 +47,9 @@ export default StyleSheet.create({
     facilityContainer: {
         paddingTop: 5,
         paddingBottom: 5,
-        backgroundColor: 'gray'
+        paddingLeft: 5,
+        paddingRight: 5,
+        marginBottom: 5,
+        backgroundColor: defaultColor.light
     }
 })

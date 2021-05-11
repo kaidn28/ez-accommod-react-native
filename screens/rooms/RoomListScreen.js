@@ -1,19 +1,43 @@
 import React from 'react'
-import { SafeAreaView , FlatList } from 'react-native'
+import { SafeAreaView , FlatList, Text } from 'react-native'
+import {connect} from 'react-redux'
+
+import { addFavRoom, delFavRoom } from '../../store/actions'
 
 import RoomListItem from './RoomListItem'
 import roomServices from '../../api/services/roomServices'
 
+import mainStyles from '../../styles/mainStyles'
+
 class RoomListScreen extends React.Component {
     state = {
         rooms: [],
+        errorMessage: '',
         currentPage: 1,
         totalPage: 1,
-        DEFAULT_PAGINATION_LIMIT: 1
+        DEFAULT_PAGINATION_LIMIT: 3
     }
 
     renderItem = ({item}) => {
-        return (<RoomListItem item={item} />)
+        return (<RoomListItem item={item} onToggleFavorite={this.onToggleFavorite} />)
+    }
+
+    resetError = () => {
+        this.setState({errorMessage: ''})
+    }
+
+    toggleFavorited = (roomId, status) => {
+        const room = this.state.rooms.find(e => e._id == roomId)
+        if (room.isFavorited) {
+            room.isFavorited = !room.isFavorited
+        } else {
+            room.isFavorited = status
+        }
+
+        this.setState(prevState => ({
+            rooms: prevState.rooms.map(e => e._id != roomId ? e : room)
+        }))
+
     }
 
     getRoomList = async () => {
@@ -23,7 +47,16 @@ class RoomListScreen extends React.Component {
                 limit: this.state.DEFAULT_PAGINATION_LIMIT
             }
             const res = await roomServices.getRoomList(pagination)
-            const roomResults = res.data.data.posts
+            let roomResults = res.data.data.posts
+
+            roomResults = roomResults.map(e => {
+                let isFavorited = false
+                if (this.props.userFavoriteRooms && this.props.userFavoriteRooms.length) {
+                    isFavorited = this.props.userFavoriteRooms.findIndex(favRoom => e._id == favRoom) != -1
+                }
+                return Object.assign(e, {isFavorited})
+            })
+
             this.setState(prevState => (
                     {
                         rooms: [...prevState.rooms, ...roomResults], 
@@ -32,7 +65,49 @@ class RoomListScreen extends React.Component {
                 )
             )
         } catch (error) {
+            this.setState({errorMessage: error.response.data.message})
+        }
+    }
+
+    onToggleFavorite = (item) => {
+        if (!this.props.isLoggedIn) {
+            // this.props.navigation.navigate('User', { screen: 'Login' })
+            return
+        }
+
+        const roomId = item._id
+
+        const isFavorited = item.isFavorited
+
+        if (isFavorited) {
+            this.onRemoveFavoriteRoom(roomId)
+        } else {
+            this.onFavoriteRoom(roomId)
+        }
+        this.toggleFavorited(roomId, !isFavorited)
+    }
+
+    onFavoriteRoom = async (roomId) => {
+        try {
+            await roomServices.favoriteRoom({ post_id: roomId })
+            this.props.addFavRoom({roomId})
+        } catch (error) {
             console.log(error)
+            if (error.response) {
+                this.setState({errorMessage: error.response.data.message})
+            }
+        }
+    }
+
+    onRemoveFavoriteRoom = async (roomId) => {
+        try {
+            await roomServices.removeFavoriteRoom({ post_id: roomId })
+            this.props.delFavRoom({roomId})
+        } catch (error) {
+            console.log(error)
+            if (error.response) {
+                this.setState({errorMessage: error.response.data.message})
+            }
         }
     }
 
@@ -42,8 +117,13 @@ class RoomListScreen extends React.Component {
 
     render () {
         return (
-            <SafeAreaView>
+            <SafeAreaView style={mainStyles.container}>
+                {!this.state.errorMessage ? 
+                    null : 
+                    <Text style={mainStyles.error}></Text>
+                }
                 <FlatList
+                    horizontal={true}
                     data={this.state.rooms}
                     renderItem={this.renderItem}
                     keyExtractor={(room) => room._id}
@@ -55,4 +135,14 @@ class RoomListScreen extends React.Component {
     }
 }
 
-export default RoomListScreen
+const mapStateToProps = state => ({
+    isLoggedIn: state.isLoggedIn,
+    userFavoriteRooms: state.userFavoriteRooms,
+})
+
+const mapActionsToProps = {
+    addFavRoom,
+    delFavRoom
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(RoomListScreen)

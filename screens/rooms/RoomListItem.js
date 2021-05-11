@@ -24,7 +24,7 @@ const ServiceItem = ({facility}) => (
     </View>
 )
 
-const RoomListItem = ({item}) => {
+const RoomListItem = ({item, onToggleFavorite}) => {
     const getImage = () => {
         if (item.images[0]) return {uri: item.images[0]}
         return require('../../assets/room01.jpg')
@@ -49,10 +49,11 @@ const RoomListItem = ({item}) => {
                 <Image 
                     style={itemStyles.image} 
                     source={getImage()}
+                    resizeMode="contain"
                 />
             </View>
 
-            <View style={mainStyles.centerContainer}>
+            <View style={[mainStyles.centerContainer, itemStyles.roomTypeContainer]}>
                 <Text style={itemStyles.roomType}>{defaultRoom.roomTypes.find(e => e.id == item.type).name || ''}</Text>
             </View>
 
@@ -68,10 +69,13 @@ const RoomListItem = ({item}) => {
                 )
             }
 
-            <TouchableOpacity>
+            <TouchableOpacity 
+                style={mainStyles.centerContainer}
+                onPress={() => onToggleFavorite(item)}
+            >
                 <Ionicons 
-                    name='heart-outline'
-                    size={25} 
+                    name={item.isFavorited ? 'heart' : 'heart-outline'}
+                    size={30} 
                     color={defaultColor.primary}
                 />
             </TouchableOpacity>

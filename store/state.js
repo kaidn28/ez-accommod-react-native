@@ -1,5 +1,6 @@
 export default defaultState = {
     isLoggedIn: false,
     token: null,
-    user: null
+    user: null,
+    userFavoriteRooms: []
 }

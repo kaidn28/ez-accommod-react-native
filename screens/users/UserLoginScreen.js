@@ -1,7 +1,9 @@
 import React from 'react'
 import { Text, View, Button, TextInput } from 'react-native'
+
 import store from '../../store/store'
 import {login} from '../../store/actions'
+
 class UserLoginScreen extends React.Component {
     state = {
         email: null,

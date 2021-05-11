@@ -26,8 +26,6 @@ class UserInforScreen extends React.Component{
     
 }
 const mapStateToProps = state => {
-    console.log(state)
-    console.log('cunt')
     return({
         token: state.token,
         user: state.user
