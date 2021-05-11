@@ -1,25 +1,22 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Text, View, Button } from 'react-native'
-
-
+import { Text, View, Button, TouchableOpacity, FlatList } from 'react-native'
+import userServices from '../../api/services/userServices'
+import {getUserData} from '../../store/actions'
+import InforList from './sub_components/InforList'
 class UserInforScreen extends React.Component{
-    state = {
-        user: null,
-        token: null
-    };
-
-    getUser = () => {
-        console.log(this.state)
-    }
-    componentDidMount(){
-        this.getUser();
+    constructor(props){
+        super(props)
     }
     render(){
+        //console.log(this.props.user)
+        const userInfo = this.props.user
         return (
             <View>
-                <Text> user infor screen </Text>
-                <Button title="to favorite rooms" onPress={() => this.props.navigation.navigate('Favor')}/>
+                <Text> User Infor Screen</Text>
+                <View>
+                    <InforList {...userInfo}/>
+                </View>
             </View>        
         )
     }
@@ -31,6 +28,11 @@ const mapStateToProps = state => {
         user: state.user
     })
 }
+const mapDispatchToProps = () => {
+    return {
+        getUserData
+    }
+}
 
     
-export default connect(mapStateToProps)(UserInforScreen)
+export default connect(mapStateToProps, mapDispatchToProps())(UserInforScreen)
