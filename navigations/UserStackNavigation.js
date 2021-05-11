@@ -8,8 +8,11 @@ import { useSelector } from 'react-redux'
 const UserStackNav = createStackNavigator()
 
 function UserStackNavConfigs(props){
-    const isLoggedIn = useSelector(state => state.isLoggedIn)
-    //console.log(isLoggedIn)
+    const isLoggedIn = useSelector(state => {
+        console.log(state)   
+        return state.userReducer.isLoggedIn
+    })
+    console.log(isLoggedIn)
     return (
         <UserStackNav.Navigator
             initialRouteName= "Login"

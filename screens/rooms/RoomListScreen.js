@@ -2,8 +2,7 @@ import React from 'react'
 import { SafeAreaView , FlatList, Text } from 'react-native'
 import {connect} from 'react-redux'
 
-import { addFavRoom, delFavRoom } from '../../store/actions'
-
+import {addFavRoom, delFavRoom} from '../../store/actions/roomActions'
 import RoomListItem from './RoomListItem'
 import roomServices from '../../api/services/roomServices'
 

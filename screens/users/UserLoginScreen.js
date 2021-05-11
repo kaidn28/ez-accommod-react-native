@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, View, Button, TextInput } from 'react-native'
 
 import store from '../../store/store'
-import {login} from '../../store/actions'
+import {login} from '../../store/actions/userActions'
 
 class UserLoginScreen extends React.Component {
     state = {

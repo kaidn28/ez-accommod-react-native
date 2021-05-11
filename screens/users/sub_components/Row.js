@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 const Row = (props) => {
     //console.log(props)
     return (
-        <TouchableOpacity style={{borderTopWidth: 2}}>
+        <TouchableOpacity style={{borderTopWidth: 1}}>
             <View>
                 <Text> {props.string}</Text>
             </View>

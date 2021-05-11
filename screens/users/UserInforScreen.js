@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { Text, View, Button, TouchableOpacity, FlatList } from 'react-native'
-import userServices from '../../api/services/userServices'
-import {getUserData} from '../../store/actions'
+import {getUserData} from '../../store/actions/userActions'
 import InforList from './sub_components/InforList'
 class UserInforScreen extends React.Component{
     constructor(props){
@@ -24,8 +23,8 @@ class UserInforScreen extends React.Component{
 }
 const mapStateToProps = state => {
     return({
-        token: state.token,
-        user: state.user
+        token: state.userReducer.token,
+        user: state.userReducer.user
     })
 }
 const mapDispatchToProps = () => {
