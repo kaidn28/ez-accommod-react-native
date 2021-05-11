@@ -20,9 +20,11 @@ export default {
         return axios.post(API_LOGIN, payload)
     },
 
-    getUserProfile (id) {
+    getUserProfile (payload) {
         // return axios.get(API_GET_ROOM_LIST)
-        return axios.get(`${API_USER + id}`)
+        console.log(`${API_USER}/${payload.id}`)
+        console.log(`Bearer ${payload.token}`)
+        return axios.get(`${API_USER}/${payload.id}`, {headers: {Authorization: `Bearer ${payload.token}`}})
     },
 
     loginWithFacebook (payload) {

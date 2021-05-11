@@ -8,6 +8,8 @@ class UserLoginScreen extends React.Component {
         password: null
     }
     submitLogin = ()=> {
+        const email = this.state.email;
+        const password = this.state.password;
         const payload = {
             email: this.state.email,
             password: this.state.password
