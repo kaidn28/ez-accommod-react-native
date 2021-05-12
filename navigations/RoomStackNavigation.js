@@ -15,7 +15,7 @@ function RoomStackNavConfigs(props){
             component={RoomListScreen}
             options= {{
                 title: 'Room List',
-                headerTitleAlign: 'center'
+                headerTitleAlign: 'center',
             }}
         /> 
         <RoomStackNav.Screen
