@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { Text, View, Button, TouchableOpacity, FlatList } from 'react-native'
-import {getUserData} from '../../store/actions/userActions'
+import {getUserData} from '../../../store/actions/userActions'
 import InforList from './sub_components/InforList'
 class UserInforScreen extends React.Component{
     constructor(props){

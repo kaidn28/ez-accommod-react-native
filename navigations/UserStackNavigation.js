@@ -1,18 +1,19 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import UserFavorScreen from '../screens/users/UserFavorScreen'
-import UserLoginScreen from '../screens/users/UserLoginScreen'
-import UserInforScreen from '../screens/users/UserInforScreen'
-import { useSelector } from 'react-redux'
+import UserFavorScreen from '../screens/users/profile/UserFavorScreen'
+import UserInforScreen from '../screens/users/profile/UserInforScreen'
+import UserLoginScreen from '../screens/users/login/UserLoginScreen'
+import UserSignUpScreen from '../screens/users/login/UserSignUpScreen'
 
+import { useSelector } from 'react-redux'
 const UserStackNav = createStackNavigator()
 
 function UserStackNavConfigs(props){
     const isLoggedIn = useSelector(state => {
-        console.log(state)   
+        //console.log(state)   
         return state.userReducer.isLoggedIn
     })
-    console.log(isLoggedIn)
+    //console.log(isLoggedIn)
     return (
         <UserStackNav.Navigator
             initialRouteName= "Login"
@@ -44,6 +45,13 @@ function UserStackNavConfigs(props){
                         component= {UserLoginScreen}
                         options = {{
                             title: 'Login',
+                        }}
+                    />
+                    <UserStackNav.Screen
+                        name="SignUp"
+                        component={UserSignUpScreen}
+                        options = {{
+                            title: 'Sign Up'
                         }}
                     />
                     </>
