@@ -14,16 +14,14 @@ function RoomStackNavConfigs(props){
             name="List"
             component={RoomListScreen}
             options= {{
-                title: 'Room List',
-                headerTitleAlign: 'center',
+                headerShown: false,
             }}
         /> 
         <RoomStackNav.Screen
             name="Details"
             component={RoomDetailsScreen}
             options = {{
-                title: 'room details',
-                headerTitleAlign: 'center'
+                headerShown: false
             }}
         />
         </RoomStackNav.Navigator>

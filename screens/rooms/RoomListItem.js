@@ -8,21 +8,16 @@ import 'intl/locale-data/jsonp/vi'
 import {defaultColor} from '../../styles/constStyles'
 import itemStyles from '../../styles/roomListStyles'
 import mainStyles from '../../styles/mainStyles'
-import { ROOM_TYPES, ROOM_FACILITIES, CITIES, HANOI_DISTRICTS, HANOI_WARDS } from '../../consts/consts'
+import { ROOM_TYPES, CITIES, HANOI_DISTRICTS, HANOI_WARDS } from '../../consts/consts'
+
+import RoomFacilityList from './RoomFacilityList'
 
 const defaultRoom = {
     roomTypes: ROOM_TYPES,
-    roomFacilities: ROOM_FACILITIES,
     cities: CITIES,
     hanoiDistricts: HANOI_DISTRICTS,
     hanoiWards: HANOI_WARDS
 }
-
-const ServiceItem = ({facility}) => (
-    <View style={itemStyles.facilityContainer}>
-        <Text>{defaultRoom.roomFacilities.find(e => e.value == facility).name}</Text>
-    </View>
-)
 
 const RoomListItem = ({item, onToggleFavorite}) => {
     const getImage = () => {
@@ -64,10 +59,11 @@ const RoomListItem = ({item, onToggleFavorite}) => {
             <View>
                 <Text style={itemStyles.price}>{new Intl.NumberFormat('vi-VN').format(item.rooms[0].price.replace(/\D/g, '')) } đồng/tháng</Text>
             </View>
-            {item.rooms[0].services.map(
+            {/* {item.rooms[0].services.map(
                     (facility, i) => <ServiceItem facility={facility} key={i}></ServiceItem>
                 )
-            }
+            } */}
+            <RoomFacilityList facilities={item.rooms[0].services}></RoomFacilityList>
 
             <TouchableOpacity 
                 style={mainStyles.centerContainer}
