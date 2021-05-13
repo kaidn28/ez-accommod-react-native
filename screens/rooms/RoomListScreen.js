@@ -7,6 +7,7 @@ import 'intl/locale-data/jsonp/vi'
 
 import RoomListOptionBar from './RoomListOptionBar'
 import RoomList from './RoomList'
+import RoomFilterModal from './RoomFilterModal'
 
 import roomServices from '../../api/services/roomServices'
 
@@ -31,8 +32,9 @@ class RoomListScreen extends React.Component {
         currentPage: 1,
         lastFetchedPage: 0,
         reachLastPage: false,
+        modalVisible: false,
         errorMessage: '',
-        DEFAULT_PAGINATION_LIMIT: 30,
+        DEFAULT_PAGINATION_LIMIT: 5,
     }
 
     resetSettings = () => {
@@ -57,8 +59,12 @@ class RoomListScreen extends React.Component {
         this.getRoomList()
     }
 
-    openFilter = () => {
+    openFilterModal = () => {
+        this.setState({modalVisible: true})
+    }
 
+    closeFilterModal = () => {
+        this.setState({modalVisible: false})
     }
 
     /*
@@ -184,13 +190,17 @@ class RoomListScreen extends React.Component {
                 <RoomListOptionBar
                     errorMessage={this.state.errorMessage}
                     getDefaultList={this.getDefaultList}
-                    openFilter={this.openFilter}
+                    openFilterModal={this.openFilterModal}
                 />
                 <RoomList
                     rooms={this.state.rooms}
                     getRoomList={this.getRoomList}
                     setError={this.setError}
                     setRooms={this.setRooms}
+                />
+                <RoomFilterModal
+                    modalVisible={this.state.modalVisible}
+                    closeFilterModal={this.closeFilterModal}
                 />
             </View>
         )

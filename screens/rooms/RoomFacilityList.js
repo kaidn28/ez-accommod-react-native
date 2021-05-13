@@ -12,7 +12,7 @@ const defaultRoom = {
 
 const ServiceItem = ({facility}) => (
     <View style={itemStyles.facilityContainer}>
-        <Text>{defaultRoom.roomFacilities.find(e => e.value == facility).name}</Text>
+        <Text>{defaultRoom.roomFacilities.find(e => e.id == facility).name}</Text>
     </View>
 )
 

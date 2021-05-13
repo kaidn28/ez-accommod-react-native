@@ -24,7 +24,7 @@ class RoomListOptionBar extends React.Component {
 
           <TouchableOpacity
             style={[mainStyles.centerContainer, itemStyles.icon]}
-            onPress={this.props.openFilter}
+            onPress={this.props.openFilterModal}
           >
             <Ionicons
               name="filter-outline"

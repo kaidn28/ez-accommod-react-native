@@ -23,8 +23,12 @@ export default StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    rightmost: {
-      alignSelf: 'flex-end'
+    leftmost: {
+      alignSelf: 'flex-start'
+    },
+    horizontalContainer: {
+      flexDirection: 'row',
+      alignItems: 'center'
     }
 });
   

@@ -32,7 +32,7 @@ class RoomList extends React.Component {
     */
     onToggleFavorite = (item) => {
         if (!this.props.isLoggedIn) {
-            // this.props.navigation.navigate('User', { screen: 'Login' })
+            // this.props.navigation.navigate('User')
             return
         }
 
