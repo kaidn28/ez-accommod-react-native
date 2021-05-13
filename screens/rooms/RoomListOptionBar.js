@@ -3,27 +3,27 @@ import { View, Text, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { defaultColor } from "../../styles/constStyles";
-import itemStyles from "../../styles/roomListStyles";
+import optionBarStyles from "../../styles/roomStyles/optionBarStyles";
 import mainStyles from "../../styles/mainStyles";
 
 class RoomListOptionBar extends React.Component {
   render() {
     return (
-      <View style={itemStyles.optionBar}>
+      <View style={optionBarStyles.optionBar}>
         {!this.props.errorMessage ? null : (
           <Text style={mainStyles.error}></Text>
         )}
 
-        <View style={itemStyles.optionBarToolSet}>
+        <View style={optionBarStyles.optionBarToolSet}>
           <TouchableOpacity
-            style={[mainStyles.centerContainer, itemStyles.icon]}
+            style={[mainStyles.centerContainer, optionBarStyles.icon]}
             onPress={this.props.getDefaultList}
           >
             <Ionicons name="list-outline" size={30} color={defaultColor.dark} />
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[mainStyles.centerContainer, itemStyles.icon]}
+            style={[mainStyles.centerContainer, optionBarStyles.icon]}
             onPress={this.props.openFilterModal}
           >
             <Ionicons

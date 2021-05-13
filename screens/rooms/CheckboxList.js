@@ -5,7 +5,7 @@ import CheckBox from '@react-native-community/checkbox';
 import { defaultColor } from '../../styles/constStyles'
 
 import mainStyles from '../../styles/mainStyles'
-import modalStyles from '../../styles/roomFilterModalStyles'
+import modalStyles from '../../styles/roomStyles/roomFilterModalStyles'
 
 class CheckboxItem extends React.PureComponent {
     state = {

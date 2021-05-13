@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import { defaultColor, defaultBorder } from './constStyles'
-
 export default StyleSheet.create({
     modalView: {
         marginTop: 'auto',

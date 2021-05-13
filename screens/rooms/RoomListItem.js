@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import {defaultColor} from '../../styles/constStyles'
-import itemStyles from '../../styles/roomListStyles'
+import itemStyles from '../../styles/roomStyles/roomListStyles'
 import mainStyles from '../../styles/mainStyles'
 
 import RoomFacilityList from './RoomFacilityList'

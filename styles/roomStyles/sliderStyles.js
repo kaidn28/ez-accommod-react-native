@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { defaultColor, defaultBorder } from "./constStyles";
+import { defaultColor } from "../constStyles";
 
 const THUMB_RADIUS = 12;
 

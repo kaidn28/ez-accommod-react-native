@@ -7,7 +7,7 @@ import RoomListItem from './RoomListItem'
 import roomServices from '../../api/services/roomServices'
 
 import mainStyles from '../../styles/mainStyles'
-import itemStyles from '../../styles/roomListStyles'
+import itemStyles from '../../styles/roomStyles/roomListStyles'
 
 class RoomList extends React.Component {
     renderItem = ({item}) => {

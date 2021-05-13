@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text } from 'react-native';
 import RangeSlider from 'rn-range-slider';
 
-import sliderStyles from '../../styles/sliderStyles'
-import modalStyles from '../../styles/roomFilterModalStyles'
+import sliderStyles from '../../styles/roomStyles/sliderStyles'
+import modalStyles from '../../styles/roomStyles/roomFilterModalStyles'
 
 const Thumb = () => {
     return (

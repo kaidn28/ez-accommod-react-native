@@ -6,7 +6,7 @@ import ModalSelector from "react-native-modal-selector";
 import RangeSlider from "./RangeSlider";
 import CheckboxList from "./CheckboxList";
 
-import modalStyles from "../../styles/roomFilterModalStyles";
+import modalStyles from "../../styles/roomStyles/roomFilterModalStyles";
 
 import {
   CITIES,
