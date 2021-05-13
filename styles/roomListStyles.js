@@ -15,6 +15,9 @@ export default StyleSheet.create({
         backgroundColor: '#fff',
         width: 350
     },
+    roomList: {
+        maxHeight: 700
+    },
     image: {
         height: 150,
         width: 250,
@@ -51,5 +54,23 @@ export default StyleSheet.create({
         paddingRight: 5,
         marginBottom: 5,
         backgroundColor: defaultColor.light
+    },
+    optionBar: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    optionBarToolSet: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginRight: 30
+    },
+    icon: {
+        marginLeft: 15
+    },
+    facList: {
+        height: 240
     }
 })
