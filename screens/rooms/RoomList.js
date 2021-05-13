@@ -11,7 +11,7 @@ import itemStyles from '../../styles/roomListStyles'
 
 class RoomList extends React.Component {
     renderItem = ({item}) => {
-        return (<RoomListItem key={item._id} item={item} onToggleFavorite={this.onToggleFavorite} />)
+        return (<RoomListItem item={item} onToggleFavorite={this.onToggleFavorite} />)
     }
 
     toggleFavorited = (roomId, status) => {
@@ -79,7 +79,7 @@ class RoomList extends React.Component {
                     data={this.props.rooms}
                     renderItem={this.renderItem}
                     keyExtractor={(room) => room._id}
-                    onEndReachedThreshold={0.8}
+                    onEndReachedThreshold={0.5}
                     onEndReached={this.props.getRoomList}
                 />
             </SafeAreaView>
