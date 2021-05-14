@@ -10,7 +10,8 @@ const UserStackNav = createStackNavigator()
 
 function UserStackNavConfigs(props){
     const isLoggedIn = useSelector(state => {
-        //console.log(state)   
+        console.log('LOOK HERE')
+        console.log(state)   
         return state.userReducer.isLoggedIn
     })
     //console.log(isLoggedIn)

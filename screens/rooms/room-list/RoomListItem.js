@@ -9,7 +9,7 @@ import mainStyles from '../../../styles/mainStyles'
 import RoomFacilityList from './RoomFacilityList'
 
 
-class RoomListItem extends React.PureComponent {
+class RoomListItem extends React.Component {
     getImage = () => {
         if (this.props.item.images[0]) return {uri: this.props.item.images[0]}
         return require('../../../assets/room01.jpg')

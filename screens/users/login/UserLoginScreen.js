@@ -10,6 +10,7 @@ class UserLoginScreen extends React.Component {
         password: '',
         validationSuccess: false
     };
+
     submitLogin = ()=> {
         const email = this.state.email;
         const password = this.state.password;
@@ -19,9 +20,11 @@ class UserLoginScreen extends React.Component {
         }
         store.dispatch(login(payload))
     };
+
     validate = ()=> {
         return (this.state.email.includes('@') && this.state.password.length>=6)
     };
+
     toSignUp = () => {
         this.props.navigation.navigate('SignUp', {email: this.state.email})
     };

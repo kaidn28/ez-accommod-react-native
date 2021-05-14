@@ -9,6 +9,13 @@ export default StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center'
     },
+    containerWithHeader: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingTop: 15
+    },
     containerWithoutHeader: {
       flex: 1,
       backgroundColor: '#fff',
@@ -18,6 +25,14 @@ export default StyleSheet.create({
     },
     error: {
       color: 'red',
+    },
+    warning: {
+      color: defaultColor.warning,
+    },
+    boldText: {
+      marginTop: 15,
+      fontSize: 16,
+      fontWeight: 'bold'
     },
     centerContainer: {
       alignItems: 'center',

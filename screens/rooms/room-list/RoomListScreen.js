@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import {connect} from 'react-redux'
 
 import 'intl'
@@ -34,6 +34,7 @@ class RoomListScreen extends React.Component {
         reachLastPage: false,
         modalVisible: false,
         filter: false,
+        loading: false,
         errorMessage: '',
         DEFAULT_PAGINATION_LIMIT: 5,
     }
@@ -91,11 +92,13 @@ class RoomListScreen extends React.Component {
             if (error.response) {
                 this.props.setError(error.response.data.message)
             }
+        } finally {
+            this.setState({loading: false})
         }
     }
 
     applyFilter = (item) => {
-        this.setState({filter: true})
+        this.setState({filter: true, loading: true})
     }
 
     /*
@@ -182,7 +185,14 @@ class RoomListScreen extends React.Component {
             return
         }
 
-        this.setState(prevState => ({lastFetchedPage: prevState.lastFetchedPage + 1}))
+        this.setState(prevState => 
+            (
+                {
+                    lastFetchedPage: prevState.lastFetchedPage + 1,
+                    loading: true
+                }
+            )
+        )
 
         try {
             const pagination = {
@@ -210,6 +220,8 @@ class RoomListScreen extends React.Component {
             if (error.response) {
                 this.props.setError(error.response.data.message)
             }
+        } finally {
+            this.setState({loading: false})
         }
     }
 
@@ -223,6 +235,13 @@ class RoomListScreen extends React.Component {
         this.getRoomList()
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.isLoggedIn != this.props.isLoggedIn) {
+            const rooms = this.getHandledRoomList(this.state.rooms)
+            this.setState({rooms})
+        }
+    }
+
     render () {
         return (
             <View style={mainStyles.containerWithoutHeader}>
@@ -231,6 +250,8 @@ class RoomListScreen extends React.Component {
                     getDefaultList={this.getDefaultList}
                     openFilterModal={this.openFilterModal}
                 />
+                {this.state.rooms.length || this.state.loading ? null : (<Text style={[mainStyles.warning, mainStyles.boldText]}>Không có dữ liệu</Text>)}
+                {!this.state.loading || this.state.rooms.length ? null : (<Text style={[mainStyles.boldText]}>Đang tải dữ liệu</Text>)}
                 <RoomList
                     rooms={this.state.rooms}
                     getRoomList={this.getRoomList}
@@ -250,7 +271,8 @@ class RoomListScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    userFavoriteRooms: state.userFavoriteRooms,
+    userFavoriteRooms: state.roomReducer.userFavoriteRooms,
+    isLoggedIn: state.userReducer.isLoggedIn
 })
 
 export default connect(mapStateToProps)(RoomListScreen)

@@ -14,22 +14,13 @@ class RoomList extends React.Component {
         return (<RoomListItem item={item} onToggleFavorite={this.onToggleFavorite} />)
     }
 
-    toggleFavorited = (roomId, status) => {
+    toggleFavorited = (roomId) => {
         const room = this.props.rooms.find(e => e._id == roomId)
-        if (room.isFavorited) {
-            room.isFavorited = !room.isFavorited
-        } else {
-            room.isFavorited = status
-        }
+        room.isFavorited = !room.isFavorited
 
-        this.setRooms(this.props.rooms.map(e => e._id != roomId ? e : room))
+        this.props.setRooms(this.props.rooms.map(e => e._id != roomId ? e : room))
     }
 
-    /*
-    *   Handle whether it should add new favorite room or delete existed one.
-    *   Nested navigators caused errors. 
-    *   Gonna fix that later. Now I left that commented out. 
-    */
     onToggleFavorite = (item) => {
         if (!this.props.isLoggedIn) {
             this.props.navigation.navigate('User')
@@ -45,14 +36,17 @@ class RoomList extends React.Component {
         } else {
             this.onFavoriteRoom(roomId)
         }
-        this.toggleFavorited(roomId, !isFavorited)
     }
 
     onFavoriteRoom = async (roomId) => {
         try {
-            await roomServices.favoriteRoom({ post_id: roomId })
+            const data = await roomServices.favoriteRoom({ post_id: roomId })
+
             this.props.addFavRoom({roomId})
+
+            this.toggleFavorited(roomId)
         } catch (error) {
+            console.log(error.response ? error.response.data : error)
             if (error.response) {
                 this.props.setError(error.response.data.message)
             }
@@ -61,10 +55,13 @@ class RoomList extends React.Component {
 
     onRemoveFavoriteRoom = async (roomId) => {
         try {
-            await roomServices.removeFavoriteRoom({ post_id: roomId })
+            const data = await roomServices.removeFavoriteRoom({ post_id: roomId })
+
             this.props.delFavRoom({roomId})
+
+            this.toggleFavorited(roomId)
         } catch (error) {
-            console.log(error)
+            console.log(error.response ? error.response.data : error)
             if (error.response) {
                 this.props.setError(error.response.data.message)
             }
@@ -88,8 +85,8 @@ class RoomList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    isLoggedIn: state.isLoggedIn,
-    userFavoriteRooms: state.userFavoriteRooms,
+    isLoggedIn: state.userReducer.isLoggedIn,
+    userFavoriteRooms: state.roomReducer.userFavoriteRooms,
 })
 
 const mapActionsToProps = {
