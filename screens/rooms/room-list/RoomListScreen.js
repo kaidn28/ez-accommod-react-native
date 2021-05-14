@@ -240,6 +240,7 @@ class RoomListScreen extends React.Component {
                     setError={this.setError}
                     setRooms={this.setRooms}
                     onLoadMoreRooms={this.onLoadMoreRooms}
+                    navigation={this.props.navigation}
                 />
                 <RoomFilterModal
                     modalVisible={this.state.modalVisible}
