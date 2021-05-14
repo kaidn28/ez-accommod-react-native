@@ -19,7 +19,7 @@ class RoomListOptionBar extends React.Component {
             style={[mainStyles.centerContainer, optionBarStyles.icon]}
             onPress={this.props.getDefaultList}
           >
-            <Ionicons name="list-outline" size={30} color={defaultColor.dark} />
+            <Ionicons name="refresh-outline" size={30} color={defaultColor.dark} />
           </TouchableOpacity>
 
           <TouchableOpacity
