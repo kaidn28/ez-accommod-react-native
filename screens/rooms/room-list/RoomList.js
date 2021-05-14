@@ -2,12 +2,12 @@ import React from 'react'
 import { SafeAreaView , FlatList, Text } from 'react-native'
 import {connect} from 'react-redux'
 
-import {addFavRoom, delFavRoom} from '../../store/actions/roomActions'
+import {addFavRoom, delFavRoom} from '../../../store/actions/roomActions'
 import RoomListItem from './RoomListItem'
-import roomServices from '../../api/services/roomServices'
+import roomServices from '../../../api/services/roomServices'
 
-import mainStyles from '../../styles/mainStyles'
-import itemStyles from '../../styles/roomStyles/roomListStyles'
+import mainStyles from '../../../styles/mainStyles'
+import itemStyles from '../../../styles/roomStyles/roomListStyles'
 
 class RoomList extends React.Component {
     renderItem = ({item}) => {

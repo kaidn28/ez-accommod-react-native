@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import RoomListScreen from '../screens/rooms/RoomListScreen'
-import RoomDetailsScreen from '../screens/rooms/RoomDetailsScreen'
+import RoomListScreen from '../screens/rooms/room-list/RoomListScreen'
+import RoomDetailsScreen from '../screens/rooms/room-detail/RoomDetailsScreen'
 
 const RoomStackNav = createStackNavigator()
 

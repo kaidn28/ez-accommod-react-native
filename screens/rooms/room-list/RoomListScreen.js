@@ -9,11 +9,11 @@ import RoomListOptionBar from './RoomListOptionBar'
 import RoomList from './RoomList'
 import RoomFilterModal from './RoomFilterModal'
 
-import roomServices from '../../api/services/roomServices'
+import roomServices from '../../../api/services/roomServices'
 
-import mainStyles from '../../styles/mainStyles'
+import mainStyles from '../../../styles/mainStyles'
 
-import { ROOM_TYPES, CITIES, HANOI_DISTRICTS, HANOI_WARDS } from '../../consts/consts'
+import { ROOM_TYPES, CITIES, HANOI_DISTRICTS, HANOI_WARDS } from '../../../consts/consts'
 
 const defaultRoom = {
     roomTypes: ROOM_TYPES,

@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, SafeAreaView , FlatList, Text } from 'react-native'
 
-import itemStyles from '../../styles/roomStyles/roomListStyles'
+import itemStyles from '../../../styles/roomStyles/roomListStyles'
 
-import { ROOM_FACILITIES } from '../../consts/consts'
+import { ROOM_FACILITIES } from '../../../consts/consts'
 
 const defaultRoom = {
     roomFacilities: ROOM_FACILITIES

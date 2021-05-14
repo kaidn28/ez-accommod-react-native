@@ -3,10 +3,10 @@ import { View, Text, ScrollView, Button } from "react-native";
 import Modal from "react-native-modal";
 import ModalSelector from "react-native-modal-selector";
 
-import RangeSlider from "./RangeSlider";
-import CheckboxList from "./CheckboxList";
+import RangeSlider from "../RangeSlider";
+import CheckboxList from "../CheckboxList";
 
-import modalStyles from "../../styles/roomStyles/roomFilterModalStyles";
+import modalStyles from "../../../styles/roomStyles/roomFilterModalStyles";
 
 import {
   CITIES,
@@ -15,7 +15,7 @@ import {
   ROOM_TYPES,
   ROOM_FACILITIES,
 } from "../../consts/consts";
-import { defaultColor } from "../../styles/constStyles";
+import { defaultColor } from "../../../styles/constStyles";
 
 class RoomFilterModal extends React.Component {
   state = {
