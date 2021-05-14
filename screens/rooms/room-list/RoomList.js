@@ -78,6 +78,7 @@ class RoomList extends React.Component {
                     keyExtractor={(room) => room._id}
                     onEndReachedThreshold={0.5}
                     onEndReached={this.props.onLoadMoreRooms}
+                    navigation={this.props.navigation}
                 />
             </SafeAreaView>
         )

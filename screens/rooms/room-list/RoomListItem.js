@@ -17,25 +17,29 @@ class RoomListItem extends React.Component {
     render () {
         return (
             <View style={itemStyles.container}>
-                <View style={mainStyles.container}>
-                    <Image 
-                        style={itemStyles.image} 
-                        source={this.getImage()}
-                        resizeMode="contain"
-                    />
-                </View>
-    
-                <View style={[mainStyles.centerContainer, itemStyles.roomTypeContainer]}>
-                    <Text style={itemStyles.roomType}>{this.props.item.roomType}</Text>
-                </View>
-    
-                <View>
-                    <Text style={itemStyles.address}>{this.props.item.detailedAddress}</Text>
-                    <Text style={itemStyles.address}>{this.props.item.roomFullAddress}</Text>
-                </View>
-                <View>
-                    <Text style={itemStyles.price}>{this.props.item.roomPrice} đồng/tháng</Text>
-                </View>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Details', {id: this.props.item._id})}
+                >
+                    <View style={mainStyles.container}>
+                        <Image 
+                            style={itemStyles.image} 
+                            source={this.getImage()}
+                            resizeMode="contain"
+                        />
+                    </View>
+        
+                    <View style={[mainStyles.centerContainer, itemStyles.roomTypeContainer]}>
+                        <Text style={itemStyles.roomType}>{this.props.item.roomType}</Text>
+                    </View>
+        
+                    <View>
+                        <Text style={itemStyles.address}>{this.props.item.detailedAddress}</Text>
+                        <Text style={itemStyles.address}>{this.props.item.roomFullAddress}</Text>
+                    </View>
+                    <View>
+                        <Text style={itemStyles.price}>{this.props.item.roomPrice} đồng/tháng</Text>
+                    </View>
+                </TouchableOpacity>
                 
                 <RoomFacilityList facilities={this.props.item.rooms[0].services}></RoomFacilityList>
     
