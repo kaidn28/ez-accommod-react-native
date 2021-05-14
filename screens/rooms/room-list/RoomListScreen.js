@@ -86,8 +86,6 @@ class RoomListScreen extends React.Component {
 
             roomResults = this.getHandledRoomList(roomResults)
 
-            console.log(roomResults)
-
             this.setState({ rooms: roomResults })
         } catch (error) {
             if (error.response) {
@@ -97,7 +95,6 @@ class RoomListScreen extends React.Component {
     }
 
     applyFilter = (item) => {
-        console.log(item)
         this.setState({filter: true})
     }
 
