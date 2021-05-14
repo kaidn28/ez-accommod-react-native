@@ -80,7 +80,7 @@ class RoomList extends React.Component {
                     renderItem={this.renderItem}
                     keyExtractor={(room) => room._id}
                     onEndReachedThreshold={0.5}
-                    onEndReached={this.props.getRoomList}
+                    onEndReached={this.props.onLoadMoreRooms}
                 />
             </SafeAreaView>
         )

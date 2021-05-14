@@ -12,7 +12,7 @@ import RoomFacilityList from './RoomFacilityList'
 class RoomListItem extends React.PureComponent {
     getImage = () => {
         if (this.props.item.images[0]) return {uri: this.props.item.images[0]}
-        return require('../../assets/room01.jpg')
+        return require('../../../assets/room01.jpg')
     }
     render () {
         return (

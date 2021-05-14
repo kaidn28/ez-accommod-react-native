@@ -14,7 +14,7 @@ import {
   HANOI_WARDS,
   ROOM_TYPES,
   ROOM_FACILITIES,
-} from "../../consts/consts";
+} from "../../../consts/consts";
 import { defaultColor } from "../../../styles/constStyles";
 
 class RoomFilterModal extends React.Component {
@@ -76,8 +76,21 @@ class RoomFilterModal extends React.Component {
     }
   };
 
+  handleFilter = () => {
+    const res = Object.keys(this.state)
+              .reduce((accumulator, key) => {
+                if (key == 'defaultInfo' || !this.state[key] || !this.state[key].length) {
+                  return accumulator
+                } 
+                accumulator[key] = this.state[key]
+                return accumulator
+              }, {})
+    return res
+  }
+
   onApplyFilter = () => {
-    console.log(this.state.services);
+    const filter = this.handleFilter()
+    this.props.applyFilter(filter)
     this.props.closeFilterModal();
   };
 

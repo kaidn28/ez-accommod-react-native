@@ -33,17 +33,20 @@ class RoomListScreen extends React.Component {
         lastFetchedPage: 0,
         reachLastPage: false,
         modalVisible: false,
+        filter: false,
         errorMessage: '',
         DEFAULT_PAGINATION_LIMIT: 5,
     }
 
-    resetSettings = () => {
+    resetSettings = (func) => {
         this.setState({
+            rooms: [],
             currentPage: 1,
             lastFetchedPage: 0,
             reachLastPage: false,
-            errorMessage: ''
-        })
+            errorMessage: '',
+            filter: false
+        }, func)
     }
 
     setError = (err) => {
@@ -55,8 +58,7 @@ class RoomListScreen extends React.Component {
     }
 
     getDefaultList = () => {
-        this.resetSettings()
-        this.getRoomList()
+        this.resetSettings(() => this.getRoomList())
     }
 
     openFilterModal = () => {
@@ -65,6 +67,38 @@ class RoomListScreen extends React.Component {
 
     closeFilterModal = () => {
         this.setState({modalVisible: false})
+    }
+
+    /*
+    *   FILTER ROOMS FUNCTIONS
+    */
+    filerRooms = (item) => {
+        this.resetSettings()  
+        this.getFilteredRooms(item)
+    }
+
+    getFilteredRooms = async (item) => {
+        this.applyFilter(item)
+        
+        try {
+            const res = await roomServices.filterRooms(item)
+            let roomResults = res.data.data.posts
+
+            roomResults = this.getHandledRoomList(roomResults)
+
+            console.log(roomResults)
+
+            this.setState({ rooms: roomResults })
+        } catch (error) {
+            if (error.response) {
+                this.props.setError(error.response.data.message)
+            }
+        }
+    }
+
+    applyFilter = (item) => {
+        console.log(item)
+        this.setState({filter: true})
     }
 
     /*
@@ -119,6 +153,8 @@ class RoomListScreen extends React.Component {
     *   - filter necessary fields
     */
     getHandledRoomList = (roomResults) => {
+        if (!roomResults.length) return roomResults
+
         const list = roomResults.map(e => {
             if (this.state.rooms.find(room => room._id == e._id)) {
                 return
@@ -180,6 +216,12 @@ class RoomListScreen extends React.Component {
         }
     }
 
+    onLoadMoreRooms = () => {
+        if (!this.state.filter) {
+            return this.getRoomList()
+        }
+    }
+
     componentDidMount() {
         this.getRoomList()
     }
@@ -197,10 +239,12 @@ class RoomListScreen extends React.Component {
                     getRoomList={this.getRoomList}
                     setError={this.setError}
                     setRooms={this.setRooms}
+                    onLoadMoreRooms={this.onLoadMoreRooms}
                 />
                 <RoomFilterModal
                     modalVisible={this.state.modalVisible}
                     closeFilterModal={this.closeFilterModal}
+                    applyFilter={this.filerRooms}
                 />
             </View>
         )
