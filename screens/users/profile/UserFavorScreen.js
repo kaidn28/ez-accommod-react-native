@@ -203,9 +203,8 @@ class UserFavorScreen extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.isLoggedIn != this.props.isLoggedIn) {
-            const rooms = this.getHandledRoomList(this.state.rooms)
-            this.setState({rooms})
+        if (prevProps.isLoggedIn != this.props.isLoggedIn || prevProps.userFavoriteRooms.length != this.props.userFavoriteRooms.length) {
+            this.getRoomList()
         }
     }
 
