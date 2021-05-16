@@ -181,20 +181,22 @@ class UserSignUpScreen extends React.Component{
         //console.log(this.props)
         return (
             <ScrollView contentContainerStyle={styles.screen}>
-                <TouchableOpacity 
-                    style={{flexDirection: 'row'}}
-                    onPress={() => this.props.navigation.goBack()}
-                    >
-                    
-                    <Ionicons
-                        name='arrow-back-outline'
-                        size={25}
-                    />
-                    <View>
-                        <Text style={{...styles.text, marginTop: 1}}>Về đăng nhập</Text>
-                    </View>
-                    
-                </TouchableOpacity>
+                <View style={{width: 400}}>
+                    <TouchableOpacity 
+                        style={{flexDirection: 'row'}}
+                        onPress={() => this.props.navigation.goBack()}
+                        >
+                        <Ionicons
+                            name='arrow-back-outline'
+                            size={25}
+                        />
+                        <View>
+                            <Text style={{...styles.text, marginTop: 1}}>Về đăng nhập</Text>
+                        </View>
+                        
+                    </TouchableOpacity>
+                </View>
+                
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <Text style={{fontSize: 20}}> Đăng ký </Text>
@@ -298,8 +300,8 @@ class UserSignUpScreen extends React.Component{
                     </View>
                     <TouchableOpacity  
                         onPress={this.signup}
-                        disabled={this.state.waitForResponse}
-                        style={!this.state.waitForResponse? styles.enabledButton: styles.disabledButton}
+                        disabled={this.state.waitForResponse || !this.validate()}
+                        style={(!this.state.waitForResponse && this.validate())? styles.enabledButton: styles.disabledButton}
                     >
                         <Text style={styles.text}> Đăng ký </Text>
                     </TouchableOpacity>

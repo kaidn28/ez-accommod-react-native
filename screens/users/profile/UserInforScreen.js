@@ -1,8 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Text, View, Button, TouchableOpacity, FlatList } from 'react-native'
+import { View} from 'react-native'
 import {getUserData} from '../../../store/actions/userActions'
 import InforList from './sub_components/InforList'
+import FavorRow from './sub_components/FavorRow'
+import LogoutRow from './sub_components/LogoutRow'
+import ProfileRow from './sub_components/ProfileRow'
+import styles from '../../../styles/mainStyles'
 class UserInforScreen extends React.Component{
     constructor(props){
         super(props)
@@ -11,11 +15,10 @@ class UserInforScreen extends React.Component{
         //console.log(this.props.user)
         const userInfo = this.props.user
         return (
-            <View>
-                <Text> User Infor Screen</Text>
-                <View>
-                    <InforList {...userInfo}/>
-                </View>
+            <View style={{flex: 1, justifyContent: 'center'}}>
+                <ProfileRow/>
+                <FavorRow/>
+                <LogoutRow/>
             </View>        
         )
     }

@@ -26,7 +26,7 @@ function UserStackNavConfigs(props){
                         name="Infor"
                         component = {UserInforScreen}
                         options ={{
-                            title: 'Your Information',
+                            title: 'Thông tin người dùng',
                             headerTitleAlign: 'center'
                         }}
                     />
@@ -34,7 +34,7 @@ function UserStackNavConfigs(props){
                         name="Favor"
                         component = {UserFavorScreen}
                         options = {{
-                            title: 'Your favorite rooms',
+                            title: 'Phòng bạn đã thích',
                             headerTitleAlign: 'center'
                         }}
                     />
