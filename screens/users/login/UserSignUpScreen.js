@@ -22,7 +22,9 @@ class UserSignUpScreen extends React.Component{
         lastNameError: null,
         firstNameError: null,
         idError: null,
-        phoneNumberError: null
+        phoneNumberError: null,
+        beMessage: '',
+        waitForResponse: false
     }
 
     validateEmail = () => {
@@ -130,6 +132,7 @@ class UserSignUpScreen extends React.Component{
                 )
     }
     signup = async () => {
+        this.setState({waitForResponse: true})
         const email = this.state.email;
         const password = this.state.password;
         const firstName = this.state.firstName;
@@ -151,16 +154,26 @@ class UserSignUpScreen extends React.Component{
         //console.log(valid)
         if (valid) {
             try {
-                res = await userServices.signup(formData)
-                console.log(res)
+                const res = await userServices.signup(formData)
+                //console.log(res)
+                console.log(res.data.status)
+                if(res.data.status === 'success'){
+                    const beMessage = 'Đăng ký thành công';
+                    this.setState({beMessage});
+                    setTimeout(()=> this.props.navigation.push('Login',{email, password}), 500)
+                }
             }
             catch(err){
-                console.log(err.response.data)
+                console.log(err.response.data);
+                const beMessage = err.response.data.message;
+                this.setState({beMessage});
             }
+            
         }
         else {
             alert('Thông tin đăng ký không hợp lệ')
         }
+        this.setState({waitForResponse: false})
     }
     render(){
         //console.log(this.props)
@@ -257,7 +270,9 @@ class UserSignUpScreen extends React.Component{
                 <Button 
                     title='Đăng ký' 
                     onPress={this.signup}
+                    disabled={this.state.waitForResponse}
                 />
+                <Text> {this.state.beMessage? this.state.beMessage: null}</Text>
             </ScrollView>
         )
     }

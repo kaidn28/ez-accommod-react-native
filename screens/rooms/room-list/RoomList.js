@@ -69,6 +69,8 @@ class RoomList extends React.Component {
     }
 
     render () {
+        //console.log('rooms')
+        //console.log(this.props.rooms)
         return (
             <SafeAreaView style={[mainStyles.container, itemStyles.roomList]}>
                 <FlatList

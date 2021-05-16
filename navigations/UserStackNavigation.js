@@ -10,8 +10,8 @@ const UserStackNav = createStackNavigator()
 
 function UserStackNavConfigs(props){
     const isLoggedIn = useSelector(state => {
-        console.log('LOOK HERE')
-        console.log(state)   
+        //console.log('LOOK HERE')
+        //console.log(state)   
         return state.userReducer.isLoggedIn
     })
     //console.log(isLoggedIn)
@@ -45,14 +45,16 @@ function UserStackNavConfigs(props){
                         name="Login"
                         component= {UserLoginScreen}
                         options = {{
-                            title: 'Login',
+                            title: 'Đăng nhập',
+                            headerTitleAlign: 'center'
                         }}
                     />
                     <UserStackNav.Screen
                         name="SignUp"
                         component={UserSignUpScreen}
                         options = {{
-                            title: 'Sign Up'
+                            title: 'Đăng ký',
+                            headerTitleAlign: 'center'
                         }}
                     />
                     </>

@@ -210,6 +210,7 @@ class UserFavorScreen extends React.Component {
     }
 
     render () {
+        console.log(this.state.rooms)
         return (
             <View style={mainStyles.containerWithHeader}>
                 <RoomListOptionBar
