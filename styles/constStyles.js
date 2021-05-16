@@ -7,7 +7,8 @@ export const defaultColor = {
     'danger': 'fd3d39',
     'light': '#f7f7f7',
     'dark': '#687a80',
-    'shadow': 'rgb(0, 0, 0, 0.3)'
+    'shadow': 'rgb(0, 0, 0, 0.3)',
+    'disabled': '#cccccc'
 }
 
 export const defaultBorder = {

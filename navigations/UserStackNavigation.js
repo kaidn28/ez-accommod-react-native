@@ -46,7 +46,8 @@ function UserStackNavConfigs(props){
                         component= {UserLoginScreen}
                         options = {{
                             title: 'Đăng nhập',
-                            headerTitleAlign: 'center'
+                            headerTitleAlign: 'center',
+                            headerShown: false
                         }}
                     />
                     <UserStackNav.Screen
@@ -54,7 +55,8 @@ function UserStackNavConfigs(props){
                         component={UserSignUpScreen}
                         options = {{
                             title: 'Đăng ký',
-                            headerTitleAlign: 'center'
+                            headerTitleAlign: 'center',
+                            headerShown: false
                         }}
                     />
                     </>

@@ -1,9 +1,8 @@
 import React from 'react'
 import { Text, View, Button, TextInput, TouchableOpacity } from 'react-native'
-import {useIsFocused} from '@react-navigation/native'
 import store from '../../../store/store'
 import {login} from '../../../store/actions/userActions'
-
+import styles from '../../../styles/authStyles/formStyles'
 class UserLoginScreen extends React.Component {
     state = {
         email: '',
@@ -42,34 +41,42 @@ class UserLoginScreen extends React.Component {
     };
 
     render(){
-        console.log(this.state)
-        return (<View>
-                <Text> Login </Text>
-                <TextInput 
-                    placeholder="Username" 
-                    onChangeText={email => this.setState({email})}
-                    defaultValue={this.state.email}
-                    />
-                <TextInput 
-                    placeholder="Password" 
-                    secureTextEntry={true} 
-                    onChangeText={password => this.setState({password})}
-                    defaultValue={this.state.password}
-                    />
-                <Button 
-                    title="Đăng nhập" 
+        //console.log(this.state)
+        return (
+            <View style={styles.screen}>
+                
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <Text style={{fontSize: 20}}> Đăng nhập </Text>
+                    </View>
+                    <TextInput style={styles.textInput} 
+                        placeholder='Email' 
+                        onChangeText={email => this.setState({email})}
+                        defaultValue={this.state.email}
+                        />
+                    <TextInput style={styles.textInput}
+                        placeholder="Password" 
+                        secureTextEntry={true} 
+                        onChangeText={password => this.setState({password})}
+                        defaultValue={this.state.password}
+                        />
+                    <TouchableOpacity style={styles.button} 
                     onPress={this.submitLogin}
+                    style={this.validate()? styles.enabledButton : styles.disabledButton}
                     disabled={!this.validate()}
-                />
-                <View>
+                    >
+                        <Text style={styles.text}>Đăng nhập</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{flexDirection: 'row', marginTop: 5}}>
                     <View>
-                        <Text>Chưa có tài khoản?</Text>
+                        <Text style={styles.text}>Chưa có tài khoản?</Text>
                     </View>
                     <View>
                         <TouchableOpacity
                             onPress={this.toSignUp}
                         >
-                            <Text style={{color: 'blue'}}> Đăng ký</Text>
+                            <Text style={{...styles.text, color: 'blue'}}> Đăng ký</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

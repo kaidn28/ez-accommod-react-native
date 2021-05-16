@@ -1,7 +1,9 @@
 import React from 'react'
-import { Text, TextInput, View, Button, ScrollView} from 'react-native'
+import { Text, TextInput, View, Button, ScrollView, TouchableOpacity} from 'react-native'
 import {Picker} from '@react-native-community/picker'
 import userServices from '../../../api/services/userServices'
+import styles from '../../../styles/authStyles/formStyles'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 class UserSignUpScreen extends React.Component{
     constructor(props){
         super(props)
@@ -178,101 +180,132 @@ class UserSignUpScreen extends React.Component{
     render(){
         //console.log(this.props)
         return (
-            <ScrollView>
-                <View>
-                    <Text>Email *: </Text>
-                    <TextInput 
-                        placeholder={this.props.route.params.email? this.props.route.params.email: 'VD: abc2000@gmail.com'}
-                        onChangeText={email => this.setState({email})}
-                        onEndEditing={this.validateEmail}
-                    />
-                    {this.state.emailError && <Text> {this.state.emailError} </Text>}
-                </View>
-                <View>
-                    <Text>Mật khẩu *:</Text>
-                    <TextInput
-                        placeholder='Nhập mật khẩu (Ít nhất 6 kí tự)'
-                        onChangeText={password => this.setState({password})}
-                        secureTextEntry={true}
-                        onEndEditing={this.validatePassword}
-                    />
-                    {this.state.passwordError && <Text> {this.state.passwordError}</Text>}
-                </View>
-                <View>
-                    <Text>Nhập lại mật khẩu *:</Text>
-                    <TextInput
-                        placeholder='Nhập lại mật khẩu (ít nhất 6 kí tự)'
-                        onChangeText={reEnterPassword => this.setState({reEnterPassword})}
-                        secureTextEntry={true}
-                        onEndEditing={this.validateReEnterPassword}
-                    /> 
-                    {this.state.reEnterPasswordError && <Text> {this.state.reEnterPasswordError}</Text>} 
-                </View>
-                <View>
-                    <Text>Họ *: </Text>
-                    <TextInput
-                        placeholder='VD: Nguyễn'
-                        onChangeText={lastName => this.setState({lastName})}
-                        onEndEditing={this.validateLastName}
-                    />
-                    {this.state.lastNameError && <Text> {this.state.lastNameError}</Text>}
-                </View>
-                <View>
-                    <Text>Tên *: </Text>
-                    <TextInput
-                        placeholder='VD: An'
-                        onChangeText={firstName => this.setState({firstName})}
-                        onEndEditing={this.validateFirstName}
-                    />
-                    {this.state.firstNameError && <Text>{this.state.firstNameError}</Text>}
-                </View>
-                <View>
-                    <Text>Loại người dùng *: </Text>
-                    <Picker 
-                        selectedValue={'renter'}
-                        onValueChange={(role) => {this.setState({role})}}
+            <ScrollView contentContainerStyle={styles.screen}>
+                <TouchableOpacity 
+                    style={{flexDirection: 'row'}}
+                    onPress={() => this.props.navigation.goBack()}
                     >
-                        <Picker.Item label='Người thuê trọ'value='renter'/>
-                        <Picker.Item label='Chủ trọ'value='owner'/>
-                    </Picker>
-                </View>
-                <Text>Thông tin bổ sung: </Text>
-                <View>
-                    <Text>Số CMND: </Text>
-                    <TextInput
-                        placeholder='VD: 123456789012'
-                        onChangeText={socialID => this.setState({socialID})}
-                        onEndEditing={this.validateID}
+                    
+                    <Ionicons
+                        name='arrow-back-outline'
+                        size={25}
                     />
-                    {this.state.idError && <Text> {this.state.idError}</Text>}
-                </View>
-                <View>
-                    <Text>Địa chỉ: </Text>
-                    <TextInput
-                        placeholder='VD: Số 144, đường Xuân Thủy...'
-                        onChangeText={address => this.setState({address})}
-                    />
-
-                </View>
-                <View>
-                    <Text>Số điện thoại: </Text>
-                    <TextInput
-                        placeholder='VD: 0912345678'
-                        onChangeText={phoneNumber => this.setState({phoneNumber})}
-                        onEndEditing={this.validatePhoneNumber}
-                    />
-                    {this.state.phoneNumberError && <Text> {this.state.phoneNumberError} </Text>}
+                    <View>
+                        <Text style={{...styles.text, marginTop: 1}}>Về đăng nhập</Text>
+                    </View>
+                    
+                </TouchableOpacity>
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <Text style={{fontSize: 20}}> Đăng ký </Text>
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Email *: </Text>
+                        <TextInput style ={styles.textInput}
+                            placeholder={this.props.route.params.email? this.props.route.params.email: 'VD: abc2000@gmail.com'}
+                            onChangeText={email => this.setState({email})}
+                            onEndEditing={this.validateEmail}
+                        />
+                        {this.state.emailError && <Text style={styles.errorMessage}>{this.state.emailError} </Text>}
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Mật khẩu *:</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='Nhập mật khẩu (Ít nhất 6 kí tự)'
+                            onChangeText={password => this.setState({password})}
+                            secureTextEntry={true}
+                            onEndEditing={this.validatePassword}
+                        />
+                        {this.state.passwordError && <Text style={styles.errorMessage}>{this.state.passwordError}</Text>}
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Nhập lại mật khẩu *:</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='Nhập lại mật khẩu (ít nhất 6 kí tự)'
+                            onChangeText={reEnterPassword => this.setState({reEnterPassword})}
+                            secureTextEntry={true}
+                            onEndEditing={this.validateReEnterPassword}
+                        /> 
+                        {this.state.reEnterPasswordError && <Text style={styles.errorMessage}>{this.state.reEnterPasswordError}</Text>} 
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Họ *: </Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='VD: Nguyễn'
+                            onChangeText={lastName => this.setState({lastName})}
+                            onEndEditing={this.validateLastName}
+                        />
+                        {this.state.lastNameError && <Text style={styles.errorMessage}>{this.state.lastNameError}</Text>}
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Tên *: </Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='VD: An'
+                            onChangeText={firstName => this.setState({firstName})}
+                            onEndEditing={this.validateFirstName}
+                        />
+                        {this.state.firstNameError && <Text style={styles.errorMessage}>{this.state.firstNameError}</Text>}
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Loại người dùng *: </Text>
+                        <Picker 
+                            style={{...styles.textInput, height: 30}}
+                            selectedValue={this.state.role}
+                            onValueChange={(role) => this.setState({role})}
+                        >
+                            <Picker.Item 
+                                
+                                label='Người thuê trọ' value='renter'/>
+                            <Picker.Item label='Chủ trọ' value='owner'/>
+                        </Picker>
+                    </View>
+                    <Text style={styles.text}>Thông tin bổ sung: </Text>
+                    <View>
+                        <Text style={styles.text}>Số CMND: </Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='VD: 123456789012'
+                            onChangeText={socialID => this.setState({socialID})}
+                            onEndEditing={this.validateID}
+                        />
+                        {this.state.idError && <Text style={styles.errorMessage}>{this.state.idError}</Text>}
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Địa chỉ: </Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='VD: Số 144, đường Xuân Thủy...'
+                            onChangeText={address => this.setState({address})}
+                        />
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Số điện thoại: </Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='VD: 0912345678'
+                            onChangeText={phoneNumber => this.setState({phoneNumber})}
+                            onEndEditing={this.validatePhoneNumber}
+                        />
+                        {this.state.phoneNumberError && <Text> {this.state.phoneNumberError} </Text>}
+                    </View>
+                    
+                    <View>
+                        <Text style={styles.text}> Các mục có dấu (*) bắt buộc nhập</Text>
+                    </View>
+                    <TouchableOpacity  
+                        onPress={this.signup}
+                        disabled={this.state.waitForResponse}
+                        style={!this.state.waitForResponse? styles.enabledButton: styles.disabledButton}
+                    >
+                        <Text style={styles.text}> Đăng ký </Text>
+                    </TouchableOpacity>
                 </View>
                 
-                <View>
-                    <Text> Các mục có dấu (*) bắt buộc nhập</Text>
-                </View>
-                <Button 
-                    title='Đăng ký' 
-                    onPress={this.signup}
-                    disabled={this.state.waitForResponse}
-                />
-                <Text> {this.state.beMessage? this.state.beMessage: null}</Text>
+                <Text style={styles.errorMessage}> {this.state.beMessage? this.state.beMessage: null}</Text>
             </ScrollView>
         )
     }
