@@ -9,11 +9,10 @@ export default styles = StyleSheet.create({
     container: {
         backgroundColor: defaultColor.secondary,
         flexDirection: 'row',
-        width: 420,
         height: 50,
         alignItems: 'center',
         padding: 10,
-        margin: 2
+        margin: 4
 
     },
     smallText: {

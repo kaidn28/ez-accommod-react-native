@@ -19,6 +19,12 @@ function UserStackNavConfigs(props){
     return (
         <UserStackNav.Navigator
             initialRouteName= "Login"
+            screenOptions={{
+                headerTitleAlign: 'center',
+                headerStyle:{
+                    backgroundColor: 'pink'
+                }
+            }}
         >
             {
                 isLoggedIn? (
@@ -28,7 +34,6 @@ function UserStackNavConfigs(props){
                         component = {MenuScreen}
                         options ={{
                             title: 'Menu',
-                            headerTitleAlign: 'center'
                         }}
                     />
                     <UserStackNav.Screen
@@ -36,15 +41,13 @@ function UserStackNavConfigs(props){
                         component = {UserFavorScreen}
                         options = {{
                             title: 'Phòng bạn đã thích',
-                            headerTitleAlign: 'center'
                         }}
                     />
                     <UserStackNav.Screen
                         name="CreatePost"
                         component={CreatePostScreen}
                         options={{
-                            title: 'Tạo bài đăng mới',
-                            headerTitleAlign: 'center'
+                            title: 'Tạo bài đăng mới'
                         }}
                     />
                     <UserStackNav.Screen
@@ -52,7 +55,6 @@ function UserStackNavConfigs(props){
                         component={ManagePostScreen}
                         options={{
                             title: 'Các bài đăng của bạn',
-                            headerTitleAlign: 'center'
                         }}
                     />
                     </>
@@ -62,8 +64,6 @@ function UserStackNavConfigs(props){
                         name="Login"
                         component= {UserLoginScreen}
                         options = {{
-                            title: 'Đăng nhập',
-                            headerTitleAlign: 'center',
                             headerShown: false
                         }}
                     />
@@ -71,8 +71,6 @@ function UserStackNavConfigs(props){
                         name="SignUp"
                         component={UserSignUpScreen}
                         options = {{
-                            title: 'Đăng ký',
-                            headerTitleAlign: 'center',
                             headerShown: false
                         }}
                     />
