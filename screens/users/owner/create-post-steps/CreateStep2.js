@@ -60,6 +60,13 @@ class CreateStep2 extends React.Component {
     return res
   }
 
+  validForm = () => {
+    return Object.values(this.getHandledData())
+                .reduce(
+                  (accumulator, value) => accumulator && (!!value && value !== ''), true
+                )
+  }
+
   setExistedPost = () => {
       this.setState({
       })
@@ -146,7 +153,7 @@ class CreateStep2 extends React.Component {
             <View>
               <Button
                 onPress={this.props.onGoToNextStep(this.getHandledData())}
-                disabled={!!this.state.timeFrame}
+                disabled={this.validForm()}
                 title="Tiếp tục"
                 color={defaultColor.primary}
               />

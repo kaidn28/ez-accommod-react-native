@@ -3,12 +3,14 @@ import {Text, View, Button} from 'react-native'
 
 import CreateStep1 from './create-post-steps/CreateStep1'
 import CreateStep2 from './create-post-steps/CreateStep2'
+import CreateStep3 from './create-post-steps/CreateStep3'
 
 class CreatePostScreen extends React.Component {
     state = {
         step1Visible: true,
         step2Visible: false,
         step3Visible: false,
+        step4Visible: false,
         form: {
             address: {
               city: null,
@@ -20,7 +22,8 @@ class CreatePostScreen extends React.Component {
             expiredAt: null,
             type: null,
             rooms: [],
-            postPrice: null
+            postPrice: null,
+            images: []
         },
     }
 
@@ -82,6 +85,22 @@ class CreatePostScreen extends React.Component {
         }))
     }
 
+    closeStep3 = () => {
+        this.setState({step2Visible: true, step3Visible: false})
+    }
+
+    // Update form from step 3 and open step 4 modal
+    goToStep4 = (form) => {
+        this.setState(prevState => ({
+            form: {
+                ...prevState.form,
+                images: form.images
+            },
+            step3Visible: false,
+            step4Visible: true
+        }))
+    }
+
     render () {
         return (
             <View>
@@ -97,6 +116,13 @@ class CreatePostScreen extends React.Component {
                     modalVisible={this.state.step2Visible}
                     closeFilterModal={this.closeStep2}
                     onGoToNextStep={this.goToStep3}
+                    form={}
+                    hasExistedPost={false}
+                />
+                <CreateStep3
+                    modalVisible={this.state.step3Visible}
+                    closeFilterModal={this.closeStep3}
+                    onGoToNextStep={this.goToStep4}
                     form={}
                     hasExistedPost={false}
                 />
