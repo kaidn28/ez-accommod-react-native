@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList} from 'react-native'
+import { FlatList, View} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import {useSelector} from 'react-redux'
 import Row from './Row'
@@ -35,11 +35,13 @@ const InforList = (props) => {
     // in các info thành 1 list
 
     return (
-        <FlatList
+        <View>
+            <FlatList
             data={infoList}
             renderItem={obj => <Row {...obj.item}/>}
             keyExtractor={item => item.string}
-        />
+            />
+        </View>
     )
 }
 

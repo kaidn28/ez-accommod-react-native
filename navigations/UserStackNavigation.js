@@ -4,7 +4,8 @@ import UserFavorScreen from '../screens/users/profile/UserFavorScreen'
 import UserInforScreen from '../screens/users/profile/UserInforScreen'
 import UserLoginScreen from '../screens/users/login/UserLoginScreen'
 import UserSignUpScreen from '../screens/users/login/UserSignUpScreen'
-
+import CreatePostScreen from '../screens/users/owner/CreatePostScreen'
+import ManagePostScreen from '../screens/users/owner/ManagePostScreen'
 import { useSelector } from 'react-redux'
 const UserStackNav = createStackNavigator()
 
@@ -26,7 +27,7 @@ function UserStackNavConfigs(props){
                         name="Infor"
                         component = {UserInforScreen}
                         options ={{
-                            title: 'Thông tin người dùng',
+                            title: 'Menu',
                             headerTitleAlign: 'center'
                         }}
                     />
@@ -35,6 +36,22 @@ function UserStackNavConfigs(props){
                         component = {UserFavorScreen}
                         options = {{
                             title: 'Phòng bạn đã thích',
+                            headerTitleAlign: 'center'
+                        }}
+                    />
+                    <UserStackNav.Screen
+                        name="CreatePost"
+                        component={CreatePostScreen}
+                        options={{
+                            title: 'Tạo bài đăng mới',
+                            headerTitleAlign: 'center'
+                        }}
+                    />
+                    <UserStackNav.Screen
+                        name="ManagePost"
+                        component={ManagePostScreen}
+                        options={{
+                            title: 'Các bài đăng của bạn',
                             headerTitleAlign: 'center'
                         }}
                     />

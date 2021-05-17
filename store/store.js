@@ -13,7 +13,7 @@ import { combineReducers } from 'redux'
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: [], //saved
+    whitelist: ['isLoggedIn, user, token'], //saved
     //blacklist: [] //not saved
   };
 const reducer = combineReducers({
