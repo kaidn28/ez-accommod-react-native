@@ -243,7 +243,7 @@ class RoomListScreen extends React.Component {
 
     render () {
         return (
-            <View style={mainStyles.containerWithoutHeader}>
+            <View style={mainStyles.containerWithHeader}>
                 <RoomListOptionBar
                     errorMessage={this.state.errorMessage}
                     getDefaultList={this.getDefaultList}
