@@ -8,7 +8,7 @@ export default CreatePostScreen = (props) => {
             <Text> Create Post Screen</Text>
             <Button
                 title='back to menu'
-                onPress={()=>props.navigation.navigate('Infor')}
+                onPress={()=>props.navigation.navigate('Menu')}
             />
         </View>
     )

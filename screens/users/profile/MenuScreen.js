@@ -8,7 +8,7 @@ import CreatePostRow from '../owner/sub_components/CreatePostRow'
 import ManagePostRow from '../owner/sub_components/ManagePostRow'
 import styles from '../../../styles/mainStyles'
 
-const UserInforScreen =() =>{
+const MenuScreen =() =>{
     const isOwner = useSelector(state => {
         return state.userReducer.user.role === 'owner'
     })
@@ -24,4 +24,4 @@ const UserInforScreen =() =>{
 }
 
     
-export default UserInforScreen
+export default MenuScreen

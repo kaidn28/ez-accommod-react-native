@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import UserFavorScreen from '../screens/users/profile/UserFavorScreen'
-import UserInforScreen from '../screens/users/profile/UserInforScreen'
+import MenuScreen from '../screens/users/profile/MenuScreen'
 import UserLoginScreen from '../screens/users/login/UserLoginScreen'
 import UserSignUpScreen from '../screens/users/login/UserSignUpScreen'
 import CreatePostScreen from '../screens/users/owner/CreatePostScreen'
@@ -24,8 +24,8 @@ function UserStackNavConfigs(props){
                 isLoggedIn? (
                     <>
                     <UserStackNav.Screen
-                        name="Infor"
-                        component = {UserInforScreen}
+                        name="Menu"
+                        component = {MenuScreen}
                         options ={{
                             title: 'Menu',
                             headerTitleAlign: 'center'
