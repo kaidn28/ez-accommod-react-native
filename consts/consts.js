@@ -152,6 +152,42 @@ export const ROOM_FACILITIES = [
     { name: 'Không điều hòa', id: "17" }, 
     { name: 'Không ban công', id: "18" }, 
 ]
+export const ROOM_FACILITIES_BY_GROUP = {
+    'shareHouse': [
+        { label: 'Chung chủ', value: "11"},
+        { label: 'Không chung chủ', value: "12"}, 
+    ],
+    'bathroom': [
+        { label: 'Phòng tắm khép kín', value: "1"}, 
+        { label: 'Phòng tắm chung', value: "13"}, 
+    ],
+    'heater': [
+        { label: 'Có nóng lạnh', value: "2"}, 
+        { label: 'Không có bình nóng lạnh', value: "15" }, 
+    ],
+    'kitchen': [
+        { label: 'Khu bếp riêng', value: "3" }, 
+        { label: 'Khu bếp chung', value: "4" }, 
+        { label: 'Không nấu ăn', value: "16" },
+    ],
+    'aircond': [
+        { label: 'Có điều hòa', value: "5"}, 
+        { label: 'Không điều hòa', value: "17" }, 
+    ],
+    'balcony': [
+        { label: 'Có ban công', value: "6" }, 
+        { label: 'Không ban công', value: "18" }, 
+    ],
+    'bill': [
+        { label: 'Điện nước giá dân', value: "7" }, 
+        { label: 'Điện nước giá thuê', value: "14" },
+    ],
+    'others': [
+        { name: 'Có tủ lạnh', id: "8" }, 
+        { name: 'Có máy giặt', id: "9" }, 
+        { name: 'Có giường tủ', id: "10" },
+    ]
+}
 export const ROOM_VIOLATIONS = [
     { id: "1", text: 'Thông tin không chính xác' },
     { id: "2", text: 'Phòng không tồn tại' },

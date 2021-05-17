@@ -6,6 +6,7 @@ import stepStyles from '../../../styles/roomStyles/createPostStyles'
 import CreateStep1 from "./create-post-steps/CreateStep1";
 import CreateStep2 from "./create-post-steps/CreateStep2";
 import CreateStep3 from "./create-post-steps/CreateStep3";
+import CreateStep4 from "./create-post-steps/CreateStep4";
 
 class CreatePostScreen extends React.Component {
   state = {
@@ -13,10 +14,12 @@ class CreatePostScreen extends React.Component {
     step2Visible: false,
     step3Visible: false,
     step4Visible: false,
+    step5Visible: false,
     step1Valid: false,
     step2Valid: false,
     step3Valid: false,
     step4Valid: false,
+    step5Valid: false,
     form: {
       address: {
         city: null,
@@ -30,6 +33,12 @@ class CreatePostScreen extends React.Component {
       rooms: [],
       postPrice: null,
       images: [],
+    },
+    room: {
+      number: null,
+      price: null,
+      area: null,
+      services: [],
     },
   };
 
@@ -110,6 +119,23 @@ class CreatePostScreen extends React.Component {
     }));
   };
 
+  closeStep4 = () => {
+    this.setState({ step5Visible: true, step4Visible: false });
+  };
+
+  // Update form from step 4 and open step 5 modal
+  goToStep5 = (form) => {
+    this.setState((prevState) => ({
+      room: {
+        ...prevState.room,
+        services: form.services
+      },
+      step4Visible: false,
+      step5Visible: true,
+      step4Valid: true
+    }));
+  };
+
   toggleStep = (step) => {
     switch (step) {
       case 1:
@@ -129,6 +155,12 @@ class CreatePostScreen extends React.Component {
           step3Visible: !prevState.step3Visible,
         }));
         break;
+      case 4:
+          // if (!this.state.step2Valid) return
+          this.setState((prevState) => ({
+            step4Visible: !prevState.step4Visible,
+          }));
+          break;
     }
   };
 
@@ -154,6 +186,13 @@ class CreatePostScreen extends React.Component {
             visible={this.state.step3Visible}
             toggleStep={() => this.toggleStep(3)}
             onGoToNextStep={this.goToStep4}
+            form={null}
+            hasExistedPost={false}
+          />
+          <CreateStep4
+            visible={this.state.step4Visible}
+            toggleStep={() => this.toggleStep(4)}
+            onGoToNextStep={this.goToStep5}
             form={null}
             hasExistedPost={false}
           />
