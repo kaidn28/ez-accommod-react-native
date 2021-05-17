@@ -9,19 +9,26 @@ function RoomStackNavConfigs(props){
     return (
         <RoomStackNav.Navigator
             initialRouteName= "List"
+            screenOptions={{
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    backgroundColor: 'pink'
+                },
+                headerShown: true
+            }}
         >
         <RoomStackNav.Screen
             name="List"
             component={RoomListScreen}
-            options= {{
-                headerShown: false,
+            options={{
+                title: 'Danh sách phòng'
             }}
         /> 
         <RoomStackNav.Screen
             name="Details"
             component={RoomDetailsScreen}
-            options = {{
-                headerShown: false
+            options={{
+                title: 'Thông tin phòng trọ'
             }}
         />
         </RoomStackNav.Navigator>

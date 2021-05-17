@@ -9,29 +9,21 @@ function MainTabNavConfigs({route, navigation}){
     return (
         <TabNav.Navigator
             initialRouteName="Room"
+            tabBarOptions={{
+                showLabel: false
+            }}
         >
             <TabNav.Screen 
                 name="Room" 
                 options= {{
-                    title: "Room List",
-                    tabBarIcon: ({focused, tintColor}) => {
-                        if(focused){
-                            return <Ionicons 
-                            name='list-outline'
-                            size={25} 
-                            color='blue'/>
-                            
-                        }
-                        else {
-                            return <Ionicons 
-                            name='list-outline'
-                            size={25} 
-                            color='black'
+                    title: 'Rooms',
+                    tabBarIcon: ({focused}) => (
+                        <Ionicons 
+                            name={focused? 'list': 'list-outline'} 
+                            size={focused? 30: 25} 
+                            color='pink'
                         />
-                        }
-                    }
-
-                    
+                    )
                 }}
             >
                 {()=> 
@@ -42,22 +34,13 @@ function MainTabNavConfigs({route, navigation}){
                 name="User" 
                 options= {{
                     title: "User",
-                    tabBarIcon: ({focused, tintColor}) => {
-                        if(focused){
-                            return <Ionicons 
-                            name='person-outline'
-                            size={25} 
-                            color='blue'/>
-                            
-                        }
-                        else {
-                            return <Ionicons 
-                            name='person-outline'
-                            size={25} 
-                            color='black'
-                            />
-                        }
-                    } 
+                    tabBarIcon: ({focused}) => (
+                        <Ionicons 
+                            name={focused? 'person': 'person-outline'} 
+                            size={focused? 30: 25} 
+                            color='pink'
+                        />
+                    )
                 }}
             >
                 {() =><UserStackNavConfigs 

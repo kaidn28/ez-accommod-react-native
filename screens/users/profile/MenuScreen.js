@@ -15,7 +15,7 @@ const MenuScreen =() =>{
     return (
         <View style={{flex: 1, paddingTop: 10}}>
             <ProfileRow/>
-            <FavorRow/>
+            {!isOwner && <FavorRow/>}
             {isOwner && <CreatePostRow/>}
             {isOwner && <ManagePostRow/>}
             <LogoutRow/>
