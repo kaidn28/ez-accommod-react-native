@@ -36,7 +36,8 @@
     "redux": "^4.1.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "rn-range-slider": "^2.0.4"
+    "rn-range-slider": "^2.0.4",
+    "expo-image-picker": "~10.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
