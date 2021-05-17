@@ -13,5 +13,6 @@ export const defaultColor = {
 
 export const defaultBorder = {
     'borderRadius': 10,
-    'borderWidth': 1
+    'textInputRadius': 5,
+    'borderWidth': 0.5,
 }

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Button, Platform, Image } from "react-native";
-import Modal from "react-native-modal";
+import { View, Text, Button, Platform, Image, TouchableOpacity } from "react-native";
+import * as ImagePicker from 'expo-image-picker';
 
-import mainStyles from "../../../styles/mainStyles";
-import modalStyles from "../../../styles/roomStyles/roomFilterModalStyles";
+import mainStyles from "../../../../styles/mainStyles";
+import modalStyles from "../../../../styles/roomStyles/roomFilterModalStyles";
 import stepStyles from '../../../../styles/roomStyles/createPostStyles'
+
+import {defaultColor} from '../../../../styles/constStyles'
 
 const CreateStep3 = (props) => {
   const [images, setImages] = useState([]);
@@ -32,8 +34,6 @@ const CreateStep3 = (props) => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       setImages(prevArray => [...prevArray, result.uri]);
     }
@@ -47,34 +47,39 @@ const CreateStep3 = (props) => {
   }
     
   return (
-      <Modal
-        isVisible={props.modalVisible}
-        useNativeDriver={true}
-        hideModalContentWhileAnimating={true}
-        onBackdropPress={props.closeFilterModal}
-        onBackButtonPress={props.closeFilterModal}
-      >
-        <ScrollView>
-          <View style={modalStyles.modalView}>
-            <Text style={modalStyles.filterLabel}>Chọn ảnh khái quát về phòng cho thuê</Text>
-            <View style={mainStyles.container}>
-            <Button title="Chọn ảnh" onPress={pickImage} />
-            {images.map(image => (
-                <Image source={{ uri: image }} style={stepStyles.previewImg} />
-            ))}
-            </View>
-            
-            <View>
-              <Button
-                onPress={props.onGoToNextStep({images})}
-                disabled={validForm()}
-                title="Tiếp tục"
-                color={defaultColor.primary}
-              />
-            </View>
-          </View>
-        </ScrollView>
-      </Modal>
+        <View style={stepStyles.stepContainer}>
+          <TouchableOpacity 
+            style={stepStyles.titlebox}
+            onPress={props.toggleStep}
+          >
+            <Text style={modalStyles.filterLabel}>Bước 3</Text>
+          </TouchableOpacity>
+
+          {
+            !props.visible ?
+            null :
+            (
+              <View style={[modalStyles.modalView, stepStyles.viewContainer]}>
+                <Text style={modalStyles.filterLabel}>Chọn ảnh khái quát về phòng cho thuê</Text>
+                <View style={mainStyles.container}>
+                <Button color={defaultColor.secondary} title="Chọn ảnh" onPress={pickImage} />
+                {images.map(image => (
+                    <Image key={image.uri} source={{ uri: image }} style={stepStyles.previewImg} />
+                ))}
+                </View>
+                
+                <View style={stepStyles.confirmButton}>
+                  <Button
+                    onPress={() => props.onGoToNextStep({images})}
+                    disabled={!validForm()}
+                    title="Ghi nhận và tiếp tục"
+                    color={defaultColor.primary}
+                  />
+                </View>
+              </View>
+            )
+          }
+        </View>
     );
 }
 

@@ -1,13 +1,15 @@
 import React from "react";
-import { View, Text, ScrollView, Button, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, Button, TextInput } from "react-native";
 import Modal from "react-native-modal";
 import ModalSelector from "react-native-modal-selector";
 
 import { CITIES, HANOI_DISTRICTS, HANOI_WARDS, ROOM_TYPES } from '../../../../consts/consts'
 
-import mainStyles from "../../../styles/mainStyles";
-import modalStyles from "../../../styles/roomStyles/roomFilterModalStyles";
+import mainStyles from "../../../../styles/mainStyles";
+import modalStyles from "../../../../styles/roomStyles/roomFilterModalStyles";
 import stepStyles from '../../../../styles/roomStyles/createPostStyles'
+
+import {defaultColor} from '../../../../styles/constStyles'
 
 class CreateStep2 extends React.Component {
   state = {
@@ -80,87 +82,92 @@ class CreateStep2 extends React.Component {
 
   render() {
     return (
-      <Modal
-        isVisible={this.props.modalVisible}
-        useNativeDriver={true}
-        hideModalContentWhileAnimating={true}
-        onBackdropPress={this.props.closeFilterModal}
-        onBackButtonPress={this.props.closeFilterModal}
-      >
-        <ScrollView>
-          <View style={modalStyles.modalView}>
-            <Text style={modalStyles.filterLabel}>Tỉnh/thành phố</Text>
-            <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
-            <ModalSelector
-              style={modalStyles.selector}
-              data={CITIES}
-              keyExtractor={(item) => item.id}
-              labelExtractor={(item) => item.name}
-              initValue="Hà Nội"
-              onChange={(city) => this.setCity(city)}
-            />
+        <View style={stepStyles.stepContainer}>
+          <TouchableOpacity 
+            style={stepStyles.titlebox}
+            onPress={this.props.toggleStep}
+          >
+            <Text style={modalStyles.filterLabel}>Bước 2</Text>
+          </TouchableOpacity>
 
-            <Text style={modalStyles.filterLabel}>Quận/huyện/thị xã</Text>
-            <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
-            <ModalSelector
-              style={modalStyles.selector}
-              data={HANOI_DISTRICTS}
-              keyExtractor={(item) => item.id}
-              labelExtractor={(item) => item.name}
-              initValue="Hoàn Kiếm"
-              onChange={(district) => this.setDistrict(district)}
-            />
-
-            <Text style={modalStyles.filterLabel}>Phường</Text>
-            <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
-            <ModalSelector
-              style={modalStyles.selector}
-              data={this.state.defaultInfo.hanoiWards}
-              keyExtractor={(item) => item.id}
-              labelExtractor={(item) => item.name}
-              initValue="Trần Hưng Đạo"
-              onChange={(ward) => this.setWard(ward)}
-            />
-
-            <Text style={modalStyles.filterLabel}>Địa chỉ cụ thể</Text>
-            <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
-            <TextInput 
-                styles={stepStyles.input}
-                onChangeText={this.setRoad}
-                value={this.state.road}
-                placeholder='Số 30 Trần Hưng Đạo'
-            />
-
-            <Text style={modalStyles.filterLabel}>Miêu tả địa chỉ</Text>
-            <TextInput 
-                styles={stepStyles.input}
-                onChangeText={this.setDetailAddress}
-                value={this.state.detailAddress}
-                placeholder='Cà phê Tự Do'
-            />
-
-            <Text style={modalStyles.filterLabel}>Loại phòng</Text>
-            <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
-            <ModalSelector
-              style={modalStyles.selector}
-              data={ROOM_TYPES}
-              keyExtractor={(item) => item.id}
-              labelExtractor={(item) => item.name}
-              initValue="Chung cư mini"
-              onChange={(type) => this.setType(type)}
-            />
-            
-            <View>
-              <Button
-                onPress={this.props.onGoToNextStep(this.getHandledData())}
-                disabled={this.validForm()}
-                title="Tiếp tục"
-                color={defaultColor.primary}
-              />
-            </View>
-          </View>
-        </ScrollView>
-      </Modal>
+          {
+            !this.props.visible ?
+            null :
+            (
+              <View style={[modalStyles.modalView, stepStyles.viewContainer]}>
+                <Text style={modalStyles.filterLabel}>Tỉnh/thành phố</Text>
+                <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
+                <ModalSelector
+                  style={modalStyles.selector}
+                  data={CITIES}
+                  keyExtractor={(item) => item.id}
+                  labelExtractor={(item) => item.name}
+                  initValue="Chọn thành phố"
+                  onChange={(city) => this.setCity(city)}
+                />
+    
+                <Text style={modalStyles.filterLabel}>Quận/huyện/thị xã</Text>
+                <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
+                <ModalSelector
+                  style={modalStyles.selector}
+                  data={HANOI_DISTRICTS}
+                  keyExtractor={(item) => item.id}
+                  labelExtractor={(item) => item.name}
+                  initValue="Chọn quận"
+                  onChange={(district) => this.setDistrict(district)}
+                />
+    
+                <Text style={modalStyles.filterLabel}>Phường</Text>
+                <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
+                <ModalSelector
+                  style={modalStyles.selector}
+                  data={this.state.defaultInfo.hanoiWards}
+                  keyExtractor={(item) => item.id}
+                  labelExtractor={(item) => item.name}
+                  initValue="Chọn phường"
+                  onChange={(ward) => this.setWard(ward)}
+                />
+    
+                <Text style={modalStyles.filterLabel}>Địa chỉ cụ thể</Text>
+                <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
+                <TextInput 
+                    style={stepStyles.inputContainer}
+                    onChangeText={this.setRoad}
+                    value={this.state.road}
+                    placeholder='Số 30 Trần Hưng Đạo'
+                />
+    
+                <Text style={modalStyles.filterLabel}>Miêu tả địa chỉ</Text>
+                <TextInput 
+                    style={stepStyles.inputContainer}
+                    onChangeText={this.setDetailAddress}
+                    value={this.state.detailAddress}
+                    placeholder='Cà phê Tự Do'
+                />
+    
+                <Text style={modalStyles.filterLabel}>Loại phòng</Text>
+                <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
+                <ModalSelector
+                  style={modalStyles.selector}
+                  data={ROOM_TYPES}
+                  keyExtractor={(item) => item.id}
+                  labelExtractor={(item) => item.name}
+                  initValue="Chọn loại phòng"
+                  onChange={(type) => this.setType(type)}
+                />
+                
+                <View style={stepStyles.confirmButton}>
+                  <Button
+                    onPress={() => this.props.onGoToNextStep(this.getHandledData())}
+                    disabled={!this.validForm()}
+                    title="Ghi nhận và tiếp tục"
+                    color={defaultColor.primary}
+                  />
+                </View>
+              </View>  
+            )
+          }
+        </View>
     );
   }
 }

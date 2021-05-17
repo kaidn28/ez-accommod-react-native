@@ -36,7 +36,10 @@ export default StyleSheet.create({
     },
     reminder: {
       color: 'gray',
-      fontSize: 12
+      fontSize: 12,
+      alignSelf: 'flex-start',
+      marginLeft: 15,
+      marginBottom: 3
     },
     centerContainer: {
       alignItems: 'center',

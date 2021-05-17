@@ -11,7 +11,7 @@ import itemStyles from '../../../styles/roomStyles/roomListStyles'
 
 class RoomList extends React.Component {
     renderItem = ({item}) => {
-        return (<RoomListItem item={item} onToggleFavorite={this.onToggleFavorite} />)
+        return (<RoomListItem item={item} onToggleFavorite={this.onToggleFavorite} navigation={this.props.navigation} />)
     }
 
     toggleFavorited = (roomId) => {
@@ -69,8 +69,6 @@ class RoomList extends React.Component {
     }
 
     render () {
-        //console.log('rooms')
-        //console.log(this.props.rooms)
         return (
             <SafeAreaView style={[mainStyles.container, itemStyles.roomList]}>
                 <FlatList
@@ -80,7 +78,6 @@ class RoomList extends React.Component {
                     keyExtractor={(room) => room._id}
                     onEndReachedThreshold={0.5}
                     onEndReached={this.props.onLoadMoreRooms}
-                    navigation={this.props.navigation}
                 />
             </SafeAreaView>
         )

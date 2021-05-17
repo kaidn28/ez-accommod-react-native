@@ -14,22 +14,28 @@ class RoomListItem extends React.Component {
         if (this.props.item.images[0]) return {uri: this.props.item.images[0]}
         return require('../../../assets/room01.jpg')
     }
+
     render () {
         return (
             <View style={itemStyles.container}>
+                <View style={mainStyles.container}>
+                    <Image 
+                        style={itemStyles.image} 
+                        source={this.getImage()}
+                        resizeMode="contain"
+                    />
+                </View>
+
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('Details', {id: this.props.item._id})}
                 >
-                    <View style={mainStyles.container}>
-                        <Image 
-                            style={itemStyles.image} 
-                            source={this.getImage()}
-                            resizeMode="contain"
-                        />
-                    </View>
-        
-                    <View style={[mainStyles.centerContainer, itemStyles.roomTypeContainer]}>
+                    <View style={[mainStyles.centerContainer, itemStyles.roomTypeContainer, mainStyles.horizontalContainer]}>
                         <Text style={itemStyles.roomType}>{this.props.item.roomType}</Text>
+                        <Ionicons 
+                            name='chevron-forward-outline'
+                            size={30} 
+                            color={defaultColor.dark}
+                        />
                     </View>
         
                     <View>
