@@ -1,12 +1,15 @@
 import React from "react";
 import { Text, View, Button, ScrollView } from "react-native";
 import mainStyles from "../../../styles/mainStyles";
-import stepStyles from '../../../styles/roomStyles/createPostStyles'
+import stepStyles from "../../../styles/roomStyles/createPostStyles";
 
 import CreateStep1 from "./create-post-steps/CreateStep1";
 import CreateStep2 from "./create-post-steps/CreateStep2";
 import CreateStep3 from "./create-post-steps/CreateStep3";
 import CreateStep4 from "./create-post-steps/CreateStep4";
+import CreateStep5 from "./create-post-steps/CreateStep5";
+
+import roomServices from "../../../api/services/roomServices";
 
 class CreatePostScreen extends React.Component {
   state = {
@@ -30,16 +33,18 @@ class CreatePostScreen extends React.Component {
       },
       expiredAt: null,
       type: null,
-      rooms: [],
       postPrice: null,
-      images: [],
     },
+    timeFrame: null,
+    images: [],
     room: {
       number: null,
       price: null,
       area: null,
       services: [],
     },
+    errorMessage: null,
+    loading: false,
   };
 
   emptyForm = () => {
@@ -54,7 +59,6 @@ class CreatePostScreen extends React.Component {
         },
         expiredAt: null,
         type: null,
-        rooms: [],
         postPrice: null,
       },
     });
@@ -72,9 +76,10 @@ class CreatePostScreen extends React.Component {
         expiredAt: form.expiredAt,
         postPrice: form.postPrice,
       },
+      timeFrame: form.timeFrame,
       step1Visible: false,
       step2Visible: true,
-      step1Valid: true
+      step1Valid: true,
     }));
   };
 
@@ -98,7 +103,7 @@ class CreatePostScreen extends React.Component {
       },
       step2Visible: false,
       step3Visible: true,
-      step2Valid: true
+      step2Valid: true,
     }));
   };
 
@@ -109,13 +114,10 @@ class CreatePostScreen extends React.Component {
   // Update form from step 3 and open step 4 modal
   goToStep4 = (form) => {
     this.setState((prevState) => ({
-      form: {
-        ...prevState.form,
-        images: form.images,
-      },
+      images: form.images,
       step3Visible: false,
       step4Visible: true,
-      step3Valid: true
+      step3Valid: true,
     }));
   };
 
@@ -128,12 +130,93 @@ class CreatePostScreen extends React.Component {
     this.setState((prevState) => ({
       room: {
         ...prevState.room,
-        services: form.services
+        services: form.services,
       },
       step4Visible: false,
       step5Visible: true,
-      step4Valid: true
+      step4Valid: true,
     }));
+  };
+
+  handleData = (form, func) => {
+    this.setState(
+      (prevState) => ({
+        room: {
+          ...prevState.room,
+          price: form.price,
+          number: form.number,
+          area: form.area,
+        },
+      }),
+      func
+    );
+  };
+
+  addDays = (date, days) => {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
+
+  transformData = () => {
+    const room = Object.assign({}, this.state.room);
+    // room.price = room.price.replaceAll(".", "");
+    const data = this.state.form;
+    data.rooms = [room]
+
+    let createdAt = null;
+    if (this.hasExistedPost) {
+      // createdAt = new Date(this.post.createdAt);
+    } else {
+      createdAt = new Date();
+    }
+    const expiredAt = this.addDays(createdAt, this.state.timeFrame).toISOString();
+    data.expiredAt = expiredAt.split("T")[0];
+
+    return data;
+  };
+
+  uploadImg = async (img, post_id, index) => {
+    const data = new FormData();
+    data.append("image", img);
+
+    try {
+      await roomServices.uploadImage({
+        data, post_id
+      });
+    } catch (error) {
+      console.log(error)
+      if (error.response) {
+        console.log(error.response.data)
+        this.setState({ errorMessage: error.response.data.message });
+      }
+    }
+  };
+
+  createPost = async () => {
+    this.setState({loading: true})
+    const data = this.transformData()
+    try {
+      const res = await roomServices.submitPost(data);
+      const postId = res.data.data.post_id
+
+      this.state.images.forEach((e, index) => {
+        this.uploadImg(e, postId, index)
+      })
+    } catch (error) {
+      console.log(error)
+      if (error.response) {
+        console.log(error.response.data)
+        this.setState({ errorMessage: error.response.data.message });
+      }
+    } finally {
+      this.setState({loading: false})
+      this.props.navigation.navigate('ManagePost')
+    }
+  };
+
+  submitForm = (form) => {
+    this.handleData(form, this.createPost);
   };
 
   toggleStep = (step) => {
@@ -156,9 +239,15 @@ class CreatePostScreen extends React.Component {
         }));
         break;
       case 4:
+        // if (!this.state.step2Valid) return
+        this.setState((prevState) => ({
+          step4Visible: !prevState.step4Visible,
+        }));
+        break;
+        case 5:
           // if (!this.state.step2Valid) return
           this.setState((prevState) => ({
-            step4Visible: !prevState.step4Visible,
+            step5Visible: !prevState.step5Visible,
           }));
           break;
     }
@@ -196,6 +285,15 @@ class CreatePostScreen extends React.Component {
             form={null}
             hasExistedPost={false}
           />
+          <CreateStep5
+            visible={this.state.step5Visible}
+            toggleStep={() => this.toggleStep(5)}
+            onGoToNextStep={this.submitForm}
+            form={null}
+            hasExistedPost={false}
+          />
+          {!this.state.error || this.state.loading ? null : (<Text style={[mainStyles.error]}>{this.state.errorMessage}</Text>)}
+          {!this.state.loading ? null : (<Text style={[mainStyles.boldText]}>Đang đăng bài viết...</Text>)}
         </ScrollView>
       </View>
     );

@@ -30,7 +30,8 @@ class CreateStep1 extends React.Component {
   };
 
   setTimeFrame = (time) => {
-    this.setState({ timeFrame: time.days }, this.getExpiredTime());
+    this.setState({ timeFrame: time.days });
+    this.getExpiredTime(time.days)
     this.getPostPrice(time.days);
   };
 
@@ -43,7 +44,7 @@ class CreateStep1 extends React.Component {
     }
   };
 
-  getExpiredTime = () => {
+  getExpiredTime = (timeFrame) => {
     let createdAt = null;
     if (this.props.hasExistedPost) {
       createdAt = new Date(this.post.createdAt);
@@ -52,7 +53,7 @@ class CreateStep1 extends React.Component {
     }
     const expiredAt = this.addDays(
       createdAt,
-      this.state.timeFrame
+      timeFrame
     ).toISOString();
     this.setState({ expiredAt: this.formatISOdate(expiredAt.split("T")[0]) });
   };

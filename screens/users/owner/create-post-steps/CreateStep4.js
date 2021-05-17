@@ -46,6 +46,15 @@ class CreateStep4 extends React.Component {
     this.props.onGoToNextStep({ services });
   };
 
+  validForm = () => {
+    const valid = Object.values(this.state)
+                  .reduce((accumulator, value) => {
+                    if (Array.isArray(value)) return accumulator && value.length
+                    return accumulator && value
+                  }, true)
+    return valid
+  }
+
   setExistedPost = () => {
     this.setState({});
   };
@@ -161,7 +170,7 @@ class CreateStep4 extends React.Component {
             <View style={stepStyles.confirmButton}>
               <Button
                 onPress={this.handleServices}
-                disabled={!this.state.timeFrame}
+                disabled={!this.validForm()}
                 title="Ghi nhận và tiếp tục"
                 color={defaultColor.primary}
               />

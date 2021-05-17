@@ -63,8 +63,8 @@ const CreateStep3 = (props) => {
                 <Text style={modalStyles.filterLabel}>Chọn ảnh khái quát về phòng cho thuê</Text>
                 <View style={mainStyles.container}>
                 <Button color={defaultColor.secondary} title="Chọn ảnh" onPress={pickImage} />
-                {images.map(image => (
-                    <Image key={image.uri} source={{ uri: image }} style={stepStyles.previewImg} />
+                {images.map((image, index) => (
+                    <Image key={index} source={{ uri: image }} style={stepStyles.previewImg} />
                 ))}
                 </View>
                 

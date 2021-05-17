@@ -50,22 +50,21 @@ class CreateStep2 extends React.Component {
   }
 
   setType = (type) => {
-    this.setState({type})
+    this.setState({type: type.id})
   }
 
   getHandledData = () => {
     const res = Object.keys(this.state).reduce((accumulator, key) => {
       if (key == 'defaultInfo') return accumulator
-      return Object.assign(accumulator, { key: this.state[key] })
+      return Object.assign(accumulator, { [key]: this.state[key] })
     }, {})
-
     return res
   }
 
   validForm = () => {
-    return Object.values(this.getHandledData())
+    return Object.keys(this.getHandledData())
                 .reduce(
-                  (accumulator, value) => accumulator && (!!value && value !== ''), true
+                  (accumulator, key) => accumulator && (key == 'detailAddress' || (!!this.state[key] && this.state[key] !== '')), true
                 )
   }
 
