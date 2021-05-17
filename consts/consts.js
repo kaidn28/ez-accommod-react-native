@@ -177,12 +177,12 @@ export const SERVICE_BY_NAME = {
 
 export const DEFAULT_TIME_FRAME = [
     { id: 1, name: '1 tuần', days: 7 },
-    { id: 1, name: '2 tuần', days: 14 },
-    { id: 1, name: '1 tháng', days: 30 },
-    { id: 1, name: '2 tháng', days: 60 },
-    { id: 1, name: '3 tháng', days: 90 },
-    { id: 1, name: '6 tháng', days: 180 },
-    { id: 1, name: '1 năm', days: 365 },
+    { id: 2, name: '2 tuần', days: 14 },
+    { id: 3, name: '1 tháng', days: 30 },
+    { id: 4, name: '2 tháng', days: 60 },
+    { id: 5, name: '3 tháng', days: 90 },
+    { id: 6, name: '6 tháng', days: 180 },
+    { id: 7, name: '1 năm', days: 365 },
 ]
 
 export const DEFAULT_POST_PRICE = [
