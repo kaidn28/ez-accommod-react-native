@@ -2,7 +2,7 @@ import React from 'react'
 import {StyleSheet} from 'react-native'
 import {defaultColor} from '../constStyles'
 
-export default styles = StyleSheet.create({
+const styles = StyleSheet.create({
     text: {
         fontSize: 15,
     },
@@ -29,3 +29,5 @@ export default styles = StyleSheet.create({
         marginLeft: 'auto'
     }
 })
+
+export default styles

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Text, View, Button} from 'react-native'
 
-export default ManagePostScreen = (props) => {
+const ManagePostScreen = (props) => {
     return (
         <View>
             <Text> Manage Post Screen</Text>
@@ -12,3 +12,5 @@ export default ManagePostScreen = (props) => {
         </View>
     )
 }
+
+export default ManagePostScreen

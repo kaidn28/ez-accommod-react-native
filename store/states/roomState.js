@@ -1,3 +1,5 @@
-export default defaultState = {
+const defaultState = {
     userFavoriteRooms: []
 }
+
+export default defaultState

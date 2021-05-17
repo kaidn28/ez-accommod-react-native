@@ -1,4 +1,4 @@
-export default defaultState = {
+const defaultState = {
     isLoggedIn: false,
     token: null,
     user: {
@@ -7,3 +7,5 @@ export default defaultState = {
         password: null,
     }
 }
+
+export default defaultState

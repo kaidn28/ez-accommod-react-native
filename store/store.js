@@ -20,6 +20,8 @@ const reducer = combineReducers({
     userReducer: persistReducer(persistConfig, userReducer),
     roomReducer
 });
-export default store = createStore(reducer, applyMiddleware(thunk))
+
+const store = createStore(reducer, applyMiddleware(thunk))
+export default store
 
 export const persistor = persistStore(store);
