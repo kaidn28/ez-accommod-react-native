@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, ScrollView, Button, TextInput } from "react-native";
 import Modal from "react-native-modal";
 import ModalSelector from "react-native-modal-selector";
-import {connect} from 'react-redux'
 
 import { CITIES, HANOI_DISTRICTS, HANOI_WARDS, ROOM_TYPES } from '../../../../consts/consts'
 
@@ -10,7 +9,7 @@ import mainStyles from "../../../styles/mainStyles";
 import modalStyles from "../../../styles/roomStyles/roomFilterModalStyles";
 import stepStyles from '../../../../styles/roomStyles/createPostStyles'
 
-class CreateStep1 extends React.Component {
+class CreateStep2 extends React.Component {
   state = {
       city: null,
       district: null,
@@ -57,7 +56,7 @@ class CreateStep1 extends React.Component {
       if (key == 'defaultInfo') return accumulator
       return Object.assign(accumulator, { key: this.state[key] })
     }, {})
-    
+
     return res
   }
 
@@ -159,8 +158,4 @@ class CreateStep1 extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-    user: state.userReducer.user,
-})
-
-export default connect(mapStateToProps)(CreateStep1)
+export default CreateStep2
