@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 
 import { DEFAULT_TIME_FRAME, DEFAULT_POST_PRICE } from '../../../../consts/consts'
 
+import mainStyles from "../../../styles/mainStyles";
 import modalStyles from "../../../styles/roomStyles/roomFilterModalStyles";
 import stepStyles from '../../../../styles/roomStyles/createPostStyles'
 
@@ -94,6 +95,7 @@ class CreateStep1 extends React.Component {
             <Text style={stepStyles.readOnlyText}>{this.getUserPhone()}</Text>
 
             <Text style={modalStyles.filterLabel}>Thời gian hiển thị bài đăng</Text>
+            <Text style={mainStyles.reminder}>Trường bắt buộc</Text>
             <ModalSelector
               style={modalStyles.selector}
               data={DEFAULT_TIME_FRAME}
@@ -112,6 +114,7 @@ class CreateStep1 extends React.Component {
             <View>
               <Button
                 onPress={this.props.onGoToNextStep(this.state)}
+                disabled={!!this.state.timeFrame}
                 title="Tiếp tục"
                 color={defaultColor.primary}
               />

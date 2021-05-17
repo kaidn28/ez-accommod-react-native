@@ -34,6 +34,10 @@ export default StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold'
     },
+    reminder: {
+      color: 'gray',
+      fontSize: 12
+    },
     centerContainer: {
       alignItems: 'center',
       justifyContent: 'center',
