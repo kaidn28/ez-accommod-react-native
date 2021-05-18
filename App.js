@@ -7,7 +7,23 @@ import { Provider } from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 import store from './store/store'
 import {persistor} from './store/store'
+import axios from './api/axiosInstance'
+
 export default function App() {
+  axios.interceptors.request.use(
+    function(config) {
+      const state = store.getState()
+      const token = state.userReducer.token
+      if (token) {
+        config.headers["Authorization"] = 'Bearer ' + token;
+      }
+      return config;
+    },
+    function(error) {
+      return Promise.reject(error);
+    }
+  );
+
   return (
     <Provider store ={store}>
       <PersistGate loading={null} persistor={persistor}>
