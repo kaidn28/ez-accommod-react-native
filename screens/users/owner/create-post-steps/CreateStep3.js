@@ -34,8 +34,14 @@ const CreateStep3 = (props) => {
       quality: 1,
     });
 
+    let localUri = result.uri;
+    let filename = localUri.split('/').pop();
+
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
     if (!result.cancelled) {
-      setImages(prevArray => [...prevArray, result.uri]);
+      setImages(prevArray => [...prevArray, {uri: localUri, name: filename, type}]);
     }
   };
 
@@ -64,7 +70,7 @@ const CreateStep3 = (props) => {
                 <View style={mainStyles.container}>
                 <Button color={defaultColor.secondary} title="Chọn ảnh" onPress={pickImage} />
                 {images.map((image, index) => (
-                    <Image key={index} source={{ uri: image }} style={stepStyles.previewImg} />
+                    <Image key={index} source={{ uri: image.uri }} style={stepStyles.previewImg} />
                 ))}
                 </View>
                 

@@ -8,6 +8,7 @@ import CreateStep2 from "./create-post-steps/CreateStep2";
 import CreateStep3 from "./create-post-steps/CreateStep3";
 import CreateStep4 from "./create-post-steps/CreateStep4";
 import CreateStep5 from "./create-post-steps/CreateStep5";
+import LoadingModal from './create-post-steps/LoadingModal'
 
 import roomServices from "../../../api/services/roomServices";
 
@@ -160,7 +161,7 @@ class CreatePostScreen extends React.Component {
 
   transformData = () => {
     const room = Object.assign({}, this.state.room);
-    // room.price = room.price.replaceAll(".", "");
+    room.price = room.price.replace(/[.]+/g, '')
     const data = this.state.form;
     data.rooms = [room]
 
@@ -181,14 +182,19 @@ class CreatePostScreen extends React.Component {
     data.append("image", img);
 
     try {
-      await roomServices.uploadImage({
+      const res = await roomServices.uploadImage({
         data, post_id
       });
+
     } catch (error) {
       console.log(error)
       if (error.response) {
         console.log(error.response.data)
         this.setState({ errorMessage: error.response.data.message });
+      }
+    } finally {
+      if (index == this.state.images.length - 1) {
+        this.setState({loading: false})
       }
     }
   };
@@ -198,20 +204,18 @@ class CreatePostScreen extends React.Component {
     const data = this.transformData()
     try {
       const res = await roomServices.submitPost(data);
-      const postId = res.data.data.post_id
+      const postId = res.data.data.post._id
 
       this.state.images.forEach((e, index) => {
         this.uploadImg(e, postId, index)
       })
+      this.props.navigation.navigate('ManagePost')
     } catch (error) {
       console.log(error)
       if (error.response) {
         console.log(error.response.data)
         this.setState({ errorMessage: error.response.data.message });
       }
-    } finally {
-      this.setState({loading: false})
-      this.props.navigation.navigate('ManagePost')
     }
   };
 
@@ -253,6 +257,10 @@ class CreatePostScreen extends React.Component {
     }
   };
 
+  openLoadingModal = () => {
+    return this.state.loading || !!this.state.errorMessage
+  }
+
   render() {
     return (
       <View style={stepStyles.container}>
@@ -292,8 +300,11 @@ class CreatePostScreen extends React.Component {
             form={null}
             hasExistedPost={false}
           />
-          {!this.state.error || this.state.loading ? null : (<Text style={[mainStyles.error]}>{this.state.errorMessage}</Text>)}
-          {!this.state.loading ? null : (<Text style={[mainStyles.boldText]}>Đang đăng bài viết...</Text>)}
+          <LoadingModal 
+            modalVisible={this.openLoadingModal()}
+            errorMessage={this.state.errorMessage}
+            loading={this.state.loading}
+          />
         </ScrollView>
       </View>
     );

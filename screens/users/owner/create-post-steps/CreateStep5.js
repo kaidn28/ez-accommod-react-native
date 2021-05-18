@@ -1,6 +1,9 @@
 import React from "react";
 import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
 
+import 'intl'
+import 'intl/locale-data/jsonp/vi'
+
 import mainStyles from "../../../../styles/mainStyles";
 import modalStyles from "../../../../styles/roomStyles/roomFilterModalStyles";
 import stepStyles from "../../../../styles/roomStyles/createPostStyles";
@@ -15,7 +18,7 @@ class CreateStep5 extends React.Component {
   };
 
   setPrice = (price) => {
-      this.setState({price})
+      this.setState({price: new Intl.NumberFormat('vi-VN').format(price.replace(/\D/g, ''))})
   }
 
   setNumber = (number) => {
@@ -61,6 +64,7 @@ class CreateStep5 extends React.Component {
                     onChangeText={this.setPrice}
                     value={this.state.price}
                     placeholder='Giá cho thuê (VNĐ)'
+                    keyboardType='numeric'
             />
 
             <Text style={modalStyles.filterLabel}>Số lượng phòng</Text>
@@ -70,6 +74,7 @@ class CreateStep5 extends React.Component {
                     onChangeText={this.setNumber}
                     value={this.state.number}
                     placeholder='Số phòng có thể cho thuê'
+                    keyboardType='numeric'
             />
 
             <Text style={modalStyles.filterLabel}>Diện tích</Text>
@@ -79,6 +84,7 @@ class CreateStep5 extends React.Component {
                     onChangeText={this.setArea}
                     value={this.state.area}
                     placeholder='Diện tích phòng (m2)'
+                    keyboardType='numeric'
             />
 
             <View style={stepStyles.confirmButton}>

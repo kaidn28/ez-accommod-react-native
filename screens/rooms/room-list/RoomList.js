@@ -27,6 +27,10 @@ class RoomList extends React.Component {
             return
         }
 
+        if (this.props.user.role != 'renter') {
+            return
+        }
+
         const roomId = item._id
 
         const isFavorited = item.isFavorited
@@ -87,6 +91,7 @@ class RoomList extends React.Component {
 const mapStateToProps = state => ({
     isLoggedIn: state.userReducer.isLoggedIn,
     userFavoriteRooms: state.roomReducer.userFavoriteRooms,
+    user: state.userReducer.user
 })
 
 const mapActionsToProps = {
