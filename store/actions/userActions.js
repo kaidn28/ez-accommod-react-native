@@ -1,7 +1,5 @@
 import userServices from "../../api/services/userServices"
 
-import axios from '../../api/axiosInstance'
-
 import { assignFavRoom } from './roomActions'
 
 export const UPDATE_INFOR = 'UPDATE_INFOR'
@@ -23,7 +21,6 @@ export const login = (payload) => {
     return async (dispatch) => {
         return userServices.login(payload)
                 .then(res =>{
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.token}`
                     dispatch(setLoginState(res.data.data))
                     dispatch(assignFavRoom(res.data.data.user.favoriteRoom))
                 })

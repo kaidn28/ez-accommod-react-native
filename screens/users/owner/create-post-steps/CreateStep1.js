@@ -115,7 +115,7 @@ class CreateStep1 extends React.Component {
                 data={DEFAULT_TIME_FRAME}
                 keyExtractor={(item) => item.id}
                 labelExtractor={(item) => item.name}
-                initValue="6 tháng"
+                initValue="Chọn thời gian"
                 onChange={(time) => this.setTimeFrame(time)}
               />
     
