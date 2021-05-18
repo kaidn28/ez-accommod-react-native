@@ -49,7 +49,7 @@ class CreateStep4 extends React.Component {
   validForm = () => {
     const valid = Object.values(this.state)
                   .reduce((accumulator, value) => {
-                    if (Array.isArray(value)) return accumulator && value.length
+                    if (Array.isArray(value)) return accumulator
                     return accumulator && value
                   }, true)
     return valid

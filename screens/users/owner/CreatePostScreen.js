@@ -231,25 +231,25 @@ class CreatePostScreen extends React.Component {
         }));
         break;
       case 2:
-        // if (!this.state.step1Valid) return
+        if (!this.state.step1Valid) return
         this.setState((prevState) => ({
           step2Visible: !prevState.step2Visible,
         }));
         break;
       case 3:
-        // if (!this.state.step2Valid) return
+        if (!this.state.step2Valid) return
         this.setState((prevState) => ({
           step3Visible: !prevState.step3Visible,
         }));
         break;
       case 4:
-        // if (!this.state.step2Valid) return
+        if (!this.state.step3Valid) return
         this.setState((prevState) => ({
           step4Visible: !prevState.step4Visible,
         }));
         break;
         case 5:
-          // if (!this.state.step2Valid) return
+          if (!this.state.step4Valid) return
           this.setState((prevState) => ({
             step5Visible: !prevState.step5Visible,
           }));
