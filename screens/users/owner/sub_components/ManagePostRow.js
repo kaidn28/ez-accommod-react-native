@@ -13,8 +13,9 @@ const ManagePostRow = (props) => {
     }
     return (
         <TouchableOpacity 
+            disabled={true}
             onPress={toManagePost}
-            style={styles.container}
+            style={{...styles.container, backgroundColor:'#cccccc'}}
         >
             <Text style={styles.text}>Quản lý bài đăng</Text>
             <Ionicons
