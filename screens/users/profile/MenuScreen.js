@@ -13,7 +13,7 @@ const MenuScreen =() =>{
         return state.userReducer.user.role === 'owner'
     })
     const isRenter = useSelector(state => {
-        return state.userReducer.role === 'renter'
+        return state.userReducer.user.role === 'renter'
     })
     return (
         <View style={{flex: 1, paddingTop: 10}}>
