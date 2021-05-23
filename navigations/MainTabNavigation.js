@@ -50,11 +50,11 @@ class MainTabNavConfigs extends React.Component {
 
     if (this.props.user.role == 'owner') {
       channel.bind("post-authenticated", (data) => {
-        sendNotif(this.state.expoPushToken, data.data.notification)
+        sendNotif(this.state.expoPushToken, "1 bài đăng của bạn đã được duyệt!")
       });
     } else if (this.props.user.role == 'renter') {
       channel.bind("review-authenticated", (data) => {
-        sendNotif(this.state.expoPushToken, data.data.notification)
+        sendNotif(this.state.expoPushToken, "1 review của bạn đã được duyệt!")
       });  
     }
 
@@ -64,7 +64,7 @@ class MainTabNavConfigs extends React.Component {
   unsubPusher = () => {
     if (!this.state.channel || !this.props.user) return;
 
-    pusher.unsubsribe(`user-${this.props.user._id}`);
+    pusher.unsubscribe(`user-${this.props.user._id}`);
     this.setState({
       channel: null,
     });
