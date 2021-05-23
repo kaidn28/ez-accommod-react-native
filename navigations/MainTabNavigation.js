@@ -12,6 +12,8 @@ const TabNav = createBottomTabNavigator();
 import Pusher from "pusher-js/react-native";
 import pusherConfig from "../pusher.json";
 
+import sendNotif from '../sendNotif'
+
 import { connect } from "react-redux";
 
 Pusher.logToConsole = true;
@@ -48,6 +50,7 @@ class MainTabNavConfigs extends React.Component {
 
     channel.bind("post-authenticated", (data) => {
       console.log(data);
+      sendNotif(data)
     });
 
     channel.bind("review-authenticated", (data) => {

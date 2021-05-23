@@ -1,8 +1,8 @@
 import { Expo } from 'expo-server-sdk';
 
-import {EXPO_ACCESS_TOKEN} from "@env"
+import config from './notifConfig.json'
 
-let expo = new Expo({ accessToken: EXPO_ACCESS_TOKEN });
+let expo = new Expo({ accessToken: config.EXPO_ACCESS_TOKEN });
 
 const sendPushNotification = async (targetExpoPushToken, message) => {
     const chunks = expo.chunkPushNotifications([

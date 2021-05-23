@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "719912368232",
+    "project_id": "ezaccommod",
+    "storage_bucket": "ezaccommod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719912368232:android:9a18f40e8af0ab735363dd",
+        "android_client_info": {
+          "package_name": "com.ezaccommodreactnative.ezaccommodreactnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "719912368232-58i96uga4n41r5qmrljtjg03kl6ft5a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHOavxnFIMNDmCLimjFOEAx_UUjhPz70k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "719912368232-58i96uga4n41r5qmrljtjg03kl6ft5a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
