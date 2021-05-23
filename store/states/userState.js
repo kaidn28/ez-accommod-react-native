@@ -5,6 +5,7 @@ const defaultState = {
         role: null,
         email: null,
         password: null,
+        _id: null
     }
 }
 

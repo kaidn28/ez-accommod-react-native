@@ -12,9 +12,9 @@ const TabNav = createBottomTabNavigator();
 import Pusher from "pusher-js/react-native";
 import pusherConfig from "../pusher.json";
 
-import sendNotif from '../sendNotif'
-
 import { connect } from "react-redux";
+
+import sendNotif from '../sendNotif'
 
 Pusher.logToConsole = true;
 
@@ -46,24 +46,25 @@ class MainTabNavConfigs extends React.Component {
   subscribePusher = () => {
     if (!this.props.isLoggedIn) return;
 
-    let channel = pusher.subscribe("user");
+    let channel = pusher.subscribe(`user-${this.props.user._id}`);
 
-    channel.bind("post-authenticated", (data) => {
-      console.log(data);
-      sendNotif(data)
-    });
-
-    channel.bind("review-authenticated", (data) => {
-      console.log(data);
-    });
+    if (this.props.user.role == 'owner') {
+      channel.bind("post-authenticated", (data) => {
+        sendNotif(this.state.expoPushToken, data.data.notification)
+      });
+    } else if (this.props.user.role == 'renter') {
+      channel.bind("review-authenticated", (data) => {
+        sendNotif(this.state.expoPushToken, data.data.notification)
+      });  
+    }
 
     this.setState({ channel });
   };
 
   unsubPusher = () => {
-    if (!this.state.channel) return;
+    if (!this.state.channel || !this.props.user) return;
 
-    pusher.unsubsribe("user");
+    pusher.unsubsribe(`user-${this.props.user._id}`);
     this.setState({
       channel: null,
     });
@@ -114,13 +115,12 @@ class MainTabNavConfigs extends React.Component {
   };
 
   _handleNotificationResponse = response => {
-    console.log(response);
   };
 
-  componentDidUpdate() {
-    if (this.props.isLoggedIn) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.isLoggedIn != this.props.isLoggedIn && this.props.isLoggedIn) {
       this.subscribePusher();
-    } else {
+    } else if (prevProps.isLoggedIn != this.props.isLoggedIn && !this.props.isLoggedIn) {
       this.unsubPusher();
     }
   }
