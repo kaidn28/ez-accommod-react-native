@@ -12,10 +12,13 @@ const MenuScreen =() =>{
     const isOwner = useSelector(state => {
         return state.userReducer.user.role === 'owner'
     })
+    const isRenter = useSelector(state => {
+        return state.userReducer.user.role === 'renter'
+    })
     return (
         <View style={{flex: 1, paddingTop: 10}}>
             <ProfileRow/>
-            {!isOwner && <FavorRow/>}
+            {isRenter && <FavorRow/>}
             {isOwner && <CreatePostRow/>}
             {isOwner && <ManagePostRow/>}
             <LogoutRow/>
