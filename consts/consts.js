@@ -189,10 +189,10 @@ export const ROOM_FACILITIES_BY_GROUP = {
     ]
 }
 export const ROOM_VIOLATIONS = [
-    { id: "1", name: 'Thông tin không chính xác' },
-    { id: "2", name: 'Phòng không tồn tại' },
-    { id: "3", name: 'Chủ trọ có thái độ không đúng mực' },
-    { id: "4", name: 'Khác' }
+    { id: "1", text: 'Thông tin không chính xác' },
+    { id: "2", text: 'Phòng không tồn tại' },
+    { id: "3", text: 'Chủ trọ có thái độ không đúng mực' },
+    { id: "4", text: 'Khác' }
 ]
 export const SERVICE_BY_NAME = {
     "1": "bathroom",
