@@ -1,9 +1,18 @@
 import React from 'react'
+import * as Linking from 'expo-linking';
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import 'intl'
+import 'intl/locale-data/jsonp/vi'
+
 import mainStyles from '../../../styles/mainStyles'
 import itemStyles from '../../../styles/roomStyles/roomListStyles'
-import { Text, View, ScrollView, Image, StyleSheet } from 'react-native'
+import { Text, View, ScrollView, Image, StyleSheet, SafeAreaView } from 'react-native'
 import roomServices from '../../../api/services/roomServices'
 import { ROOM_TYPES, CITIES, HANOI_DISTRICTS, HANOI_WARDS, ROOM_FACILITIES } from '../../../consts/consts'
+
+import RoomFacilityList from '../room-list/RoomFacilityList'
+import { defaultColor } from '../../../styles/constStyles'
 
 const defaultRoom = {
     roomTypes: ROOM_TYPES,
@@ -28,6 +37,11 @@ class RoomDetailsScreen extends React.Component {
     }
     id = this.props.route.params.id
     // use this id to fetch detail
+
+    onPressPhone = () => {
+        Linking.openURL(`tel:${this.state.phoneNumber}`)
+    }
+
     onRoomDetail = async (id) => {
         try {
 
@@ -54,7 +68,8 @@ class RoomDetailsScreen extends React.Component {
                 area: detail.rooms[0].area,
                 price: detail.rooms[0].price,
                 numbersOfRoom: detail.rooms[0].number,
-                imageURI: detail.images[0]
+                imageURI: detail.images[0],
+                services: detail.rooms[0].services
             })
 
 
@@ -62,48 +77,62 @@ class RoomDetailsScreen extends React.Component {
             console.log(error.response ? error.response.data : error)
         }
     }
+
+    roomPrice = (item) => {
+        if (!item) return null
+        return new Intl.NumberFormat('vi-VN').format(item.replace(/\D/g, ''))
+    }
+
     componentDidMount() {
         this.onRoomDetail(this.id)
     }
+
     render() {
 
         return (
             <ScrollView>
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <View style={mainStyles.container}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                     <Image
                         source={{
                             uri: this.state.imageURI,
                         }}
                         style={{
-                            width: 200,
+                            width: 300,
                             height: 200,
-
+                            marginTop: 10, 
+                            marginBottom: 10
                         }}
                     />
                 </View>
                 <View>
-                    <Text>Thông tin chung</Text>
+                    <Text style={styles.title}>Thông tin chung</Text>
                     <View style={itemStyles.container}>
                         <View style={mainStyles.horizontalContainer}>
-                            <Text style={styles.item}>Họ tên chủ trọ:</Text>
+                            <Text style={styles.item}>Họ tên chủ trọ: </Text>
                             <Text>{this.state.lastName + " "}{this.state.firstName}</Text>
                         </View>
                         <View style={mainStyles.horizontalContainer}>
-                            <Text style={styles.item}>Số điện thoại liên lạc:</Text>
-                            <Text>{this.state.phoneNumber}</Text>
+                            <Text style={styles.item}>Số điện thoại liên lạc: </Text>
+                            <Text style={styles.phoneNumber} onPress={this.onPressPhone}>{this.state.phoneNumber}</Text>
+                            <Ionicons
+                                name={"call-outline"}
+                                size={25}
+                                color="pink"
+                            />
                         </View>
                         <View style={mainStyles.horizontalContainer}>
-                            <Text style={styles.item}>Kiểu phòng cho thuê:</Text>
+                            <Text style={styles.item}>Kiểu phòng cho thuê: </Text>
                             <Text>{this.state.type}</Text>
                         </View>
                     </View>
                 </View>
                 <View>
-                    <Text>Chi tiết loại phòng</Text>
+                    <Text style={styles.title}>Chi tiết loại phòng</Text>
                     <View style={itemStyles.container}>
                         <View style={itemStyles.facilityContainer}>
                             <Text style={styles.item}>Diện tích</Text>
-                            <Text>{this.state.area} m2</Text>
+                            <Text> {this.state.area} m2</Text>
                         </View>
                         <View style={itemStyles.facilityContainer}>
                             <Text style={styles.item}>Số phòng cho thuê</Text>
@@ -111,23 +140,19 @@ class RoomDetailsScreen extends React.Component {
                         </View>
                         <View style={itemStyles.facilityContainer}>
                             <Text style={styles.item}>Địa chỉ</Text>
-                            <Text>{this.state.address}</Text>
+                            <Text> {this.state.address}</Text>
                         </View>
                         <View style={itemStyles.facilityContainer}>
                             <Text style={styles.item}>Cơ sở vật chất</Text>
-                            <Text>Chung chủ</Text>
-                            <Text>Phòng tắm khép kín</Text>
-                            <Text>Có nóng lạnh</Text>
-                            <Text>Khu bếp riêng</Text>
-                            <Text>Có điều hòa</Text>
-                            <Text>Có ban công</Text>
-                            <Text> Điện nước giá dân</Text>
+                            <RoomFacilityList facilities={this.state.services}></RoomFacilityList>
                         </View>
                     </View>
                 </View>
-                <View>
-                    <Text>Giá thuê</Text>
-                    <Text style={itemStyles.price}>{this.state.price} đồng/tháng</Text>
+                <View style={{marginBottom: 10}}>
+                    <Text style={[styles.priceLabel, styles.title]}>Giá thuê</Text>
+                    <Text style={[itemStyles.price, {paddingLeft: 10, paddingRight: 10}]}>{this.roomPrice(this.state.price)} đồng/tháng</Text>
+                </View>
+
                 </View>
             </ScrollView>
         )
@@ -136,6 +161,19 @@ class RoomDetailsScreen extends React.Component {
 const styles = StyleSheet.create({
     item: {
         fontWeight: 'bold'
+    },
+    title: {
+        marginLeft: 15,
+        fontWeight: 'bold',
+        color: defaultColor.dark
+    },
+    phoneNumber: {
+        color: defaultColor.primary,
+        fontWeight: 'bold'
+    },
+    priceLabel: {
+        textAlign: 'center',
+        fontSize: 17,
     }
 })
 
