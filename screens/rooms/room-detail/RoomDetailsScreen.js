@@ -17,6 +17,7 @@ import { ROOM_TYPES, CITIES, HANOI_DISTRICTS, HANOI_WARDS, ROOM_FACILITIES } fro
 import RoomFacilityList from '../room-list/RoomFacilityList'
 import { defaultColor } from '../../../styles/constStyles'
 import RoomOptionBar from './RoomOptionBar';
+import RoomReportModal from './RoomReportModal';
 
 const defaultRoom = {
     roomTypes: ROOM_TYPES,
@@ -37,7 +38,10 @@ class RoomDetailsScreen extends React.Component {
         numbersOfRoom: 0,
         price: 0,
         services: [],
-        imageURI: ""
+        imageURI: "",
+        reportModalVisible: false,
+        error: '',
+        reportLoading: false
     }
     id = this.props.route.params.id
     // use this id to fetch detail
@@ -88,8 +92,31 @@ class RoomDetailsScreen extends React.Component {
         return new Intl.NumberFormat('vi-VN').format(item.replace(/\D/g, ''))
     }
 
-    onReportRoom = () => {
+    openReportModal = () => {
+        this.setState({reportModalVisible: true})
+    }
 
+    closeFilterModal = () => {
+        this.setState({reportModalVisible: false})
+    }
+
+    onReportRoom = async ({items, detail}) => {
+        this.setState({reportLoading: true})
+        try {
+            let data = {
+                type: items,
+                detail: detail ? detail : 'Có lỗi'
+            }
+            await roomServices.reportRoom({ post_id: this.id, data })
+            this.closeFilterModal()
+        } catch (error) {
+            console.log(error.response ? error.response.data : error)
+            if (error.response) {
+                this.setState({error: error.response.data})
+            }
+        } finally {
+            this.setState({reportLoading: false})
+        }
     }
 
     onToggleFavorite = () => {
@@ -175,7 +202,7 @@ class RoomDetailsScreen extends React.Component {
                     />
                 </View>
                 <RoomOptionBar
-                    onReportRoom={this.onReportRoom}
+                    onReportRoom={this.openReportModal}
                     onToggleFavorite={this.onToggleFavorite}
                     isFavorited={this.state.isFavorited}
                 ></RoomOptionBar>
@@ -226,8 +253,14 @@ class RoomDetailsScreen extends React.Component {
                     <Text style={[styles.priceLabel, styles.title]}>Giá thuê</Text>
                     <Text style={[itemStyles.price, {paddingLeft: 10, paddingRight: 10}]}>{this.roomPrice(this.state.price)} đồng/tháng</Text>
                 </View>
-
                 </View>
+
+                <RoomReportModal
+                    modalVisible={this.state.reportModalVisible}
+                    closeFilterModal={this.closeFilterModal}
+                    onReportRoom={this.onReportRoom}
+                    reportLoading={this.state.reportLoading}
+                ></RoomReportModal>
             </ScrollView>
         )
     }
