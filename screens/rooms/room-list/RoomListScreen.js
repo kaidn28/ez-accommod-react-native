@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 import 'intl'
 import 'intl/locale-data/jsonp/vi'
@@ -51,11 +51,11 @@ class RoomListScreen extends React.Component {
     }
 
     setError = (err) => {
-        this.setState({errorMessage: err})
+        this.setState({ errorMessage: err })
     }
 
     setRooms = (newRooms) => {
-        this.setState({rooms: newRooms})
+        this.setState({ rooms: newRooms })
     }
 
     getDefaultList = () => {
@@ -63,24 +63,24 @@ class RoomListScreen extends React.Component {
     }
 
     openFilterModal = () => {
-        this.setState({modalVisible: true})
+        this.setState({ modalVisible: true })
     }
 
     closeFilterModal = () => {
-        this.setState({modalVisible: false})
+        this.setState({ modalVisible: false })
     }
 
     /*
     *   FILTER ROOMS FUNCTIONS
     */
     filerRooms = (item) => {
-        this.resetSettings()  
+        this.resetSettings()
         this.getFilteredRooms(item)
     }
 
     getFilteredRooms = async (item) => {
         this.applyFilter(item)
-        
+
         try {
             const res = await roomServices.filterRooms(item)
             let roomResults = res.data.data.posts
@@ -93,12 +93,12 @@ class RoomListScreen extends React.Component {
                 this.props.setError(error.response.data.message)
             }
         } finally {
-            this.setState({loading: false})
+            this.setState({ loading: false })
         }
     }
 
     applyFilter = (item) => {
-        this.setState({filter: true, loading: true})
+        this.setState({ filter: true, loading: true })
     }
 
     /*
@@ -126,7 +126,7 @@ class RoomListScreen extends React.Component {
     }
 
     roomPrice = (item) => {
-        return new Intl.NumberFormat('vi-VN').format(item.rooms[0].price.replace(/\D/g, '')) 
+        return new Intl.NumberFormat('vi-VN').format(item.rooms[0].price.replace(/\D/g, ''))
     }
 
     /*
@@ -134,15 +134,14 @@ class RoomListScreen extends React.Component {
     */
     filterAllowFields = (item) => {
         const res = Object.keys(item)
-                    .reduce((accumulator, key) => 
-                        {
-                            if (ALLOW_ROOM_FIELDS.find(field => field == key)) {
-                                accumulator[key] = item[key]
-                            }
-                            return accumulator
-                        }, 
-                        {}
-                    )
+            .reduce((accumulator, key) => {
+                if (ALLOW_ROOM_FIELDS.find(field => field == key)) {
+                    accumulator[key] = item[key]
+                }
+                return accumulator
+            },
+                {}
+            )
         return res
     }
 
@@ -168,9 +167,9 @@ class RoomListScreen extends React.Component {
                 isFavorited = this.props.userFavoriteRooms.findIndex(favRoom => e._id == favRoom) != -1
             }
             return Object.assign(
-                res, 
+                res,
                 {
-                    isFavorited, 
+                    isFavorited,
                     roomFullAddress: this.roomFullAddress(e),
                     roomType: this.roomType(e),
                     roomPrice: this.roomPrice(e)
@@ -185,13 +184,13 @@ class RoomListScreen extends React.Component {
             return
         }
 
-        this.setState(prevState => 
-            (
-                {
-                    lastFetchedPage: prevState.lastFetchedPage + 1,
-                    loading: true
-                }
-            )
+        this.setState(prevState =>
+        (
+            {
+                lastFetchedPage: prevState.lastFetchedPage + 1,
+                loading: true
+            }
+        )
         )
 
         try {
@@ -203,25 +202,25 @@ class RoomListScreen extends React.Component {
             let roomResults = res.data.data.posts
 
             if (!roomResults.length) {
-                this.setState({reachLastPage: true})
+                this.setState({ reachLastPage: true })
                 return
             }
 
             roomResults = this.getHandledRoomList(roomResults)
 
             this.setState(prevState => (
-                    {
-                        rooms: [...prevState.rooms, ...roomResults], 
-                        currentPage: prevState.currentPage + 1
-                    }
-                )
+                {
+                    rooms: [...prevState.rooms, ...roomResults],
+                    currentPage: prevState.currentPage + 1
+                }
+            )
             )
         } catch (error) {
             if (error.response) {
                 this.props.setError(error.response.data.message)
             }
         } finally {
-            this.setState({loading: false})
+            this.setState({ loading: false })
         }
     }
 
@@ -241,7 +240,7 @@ class RoomListScreen extends React.Component {
         }
     }
 
-    render () {
+    render() {
         return (
             <View style={mainStyles.containerWithHeader}>
                 <RoomListOptionBar
