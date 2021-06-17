@@ -108,6 +108,8 @@ class RoomDetailsScreen extends React.Component {
     }
 
     onReportRoom = async ({items, detail}) => {
+        if (!this.props.isLoggedIn || this.props.user.role != 'renter') this.props.navigation.navigate('User') 
+
         this.setState({reportLoading: true})
         try {
             let data = {
@@ -198,6 +200,8 @@ class RoomDetailsScreen extends React.Component {
     }
 
     onSubmitReview = async ({title, content}) => {
+        if (!this.props.isLoggedIn || this.props.user.role != 'renter') this.props.navigation.navigate('User') 
+
         this.setState({commentLoading: true})
         try {
             let data = {
