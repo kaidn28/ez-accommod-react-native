@@ -5,6 +5,9 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import 'intl'
 import 'intl/locale-data/jsonp/vi'
 
+import { connect } from 'react-redux'
+import { addFavRoom, delFavRoom } from '../../../store/actions/roomActions'
+
 import mainStyles from '../../../styles/mainStyles'
 import itemStyles from '../../../styles/roomStyles/roomListStyles'
 import { Text, View, ScrollView, Image, StyleSheet, SafeAreaView } from 'react-native'
@@ -13,6 +16,7 @@ import { ROOM_TYPES, CITIES, HANOI_DISTRICTS, HANOI_WARDS, ROOM_FACILITIES } fro
 
 import RoomFacilityList from '../room-list/RoomFacilityList'
 import { defaultColor } from '../../../styles/constStyles'
+import RoomOptionBar from './RoomOptionBar';
 
 const defaultRoom = {
     roomTypes: ROOM_TYPES,
@@ -69,7 +73,8 @@ class RoomDetailsScreen extends React.Component {
                 price: detail.rooms[0].price,
                 numbersOfRoom: detail.rooms[0].number,
                 imageURI: detail.images[0],
-                services: detail.rooms[0].services
+                services: detail.rooms[0].services,
+                isFavorited: detail.isFavorited
             })
 
 
@@ -83,6 +88,72 @@ class RoomDetailsScreen extends React.Component {
         return new Intl.NumberFormat('vi-VN').format(item.replace(/\D/g, ''))
     }
 
+    onReportRoom = () => {
+
+    }
+
+    onToggleFavorite = () => {
+        console.log('fav', this.props)
+        if (!this.props.isLoggedIn) {
+            this.props.navigation.navigate('User')
+            return
+        }
+
+        if (this.props.user.role != 'renter') {
+            return
+        }
+
+        const roomId = this.id
+
+        const isFavorited = this.state.isFavorited
+
+        if (isFavorited) {
+            this.onRemoveFavoriteRoom(roomId)
+        } else {
+            this.onFavoriteRoom(roomId)
+        }
+    }
+
+    onFavoriteRoom = async (roomId) => {
+        try {
+            const data = await roomServices.favoriteRoom({ post_id: roomId })
+
+            this.props.addFavRoom({ roomId })
+
+            this.toggleFavorited()
+        } catch (error) {
+            console.log(error.response ? error.response.data : error)
+            if (error.response) {
+                this.setState({error: error.response.data})
+            }
+        }
+    }
+
+    onRemoveFavoriteRoom = async (roomId) => {
+        try {
+            const data = await roomServices.removeFavoriteRoom({ post_id: roomId })
+
+            this.props.delFavRoom({ roomId })
+
+            this.toggleFavorited()
+        } catch (error) {
+            console.log(error.response ? error.response.data : error)
+            if (error.response) {
+                this.setState({error: error.response.data})
+            }
+        }
+    }
+
+    toggleFavorited = () => {
+        this.setState(prevState => ({isFavorited: !prevState.isFavorited}))
+    }
+
+    getImage = () => {
+        if (this.state.imageURI) return { uri: this.state.imageURI }
+
+        return require('../../../assets/room01.jpg')
+    }
+
     componentDidMount() {
         this.onRoomDetail(this.id)
     }
@@ -94,9 +165,7 @@ class RoomDetailsScreen extends React.Component {
                 <View style={mainStyles.container}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                     <Image
-                        source={{
-                            uri: this.state.imageURI,
-                        }}
+                        source={this.getImage()}
                         style={{
                             width: 300,
                             height: 200,
@@ -105,6 +174,11 @@ class RoomDetailsScreen extends React.Component {
                         }}
                     />
                 </View>
+                <RoomOptionBar
+                    onReportRoom={this.onReportRoom}
+                    onToggleFavorite={this.onToggleFavorite}
+                    isFavorited={this.state.isFavorited}
+                ></RoomOptionBar>
                 <View>
                     <Text style={styles.title}>Thông tin chung</Text>
                     <View style={itemStyles.container}>
@@ -178,4 +252,15 @@ const styles = StyleSheet.create({
 })
 
 
-export default RoomDetailsScreen
+const mapStateToProps = state => ({
+    isLoggedIn: state.userReducer.isLoggedIn,
+    userFavoriteRooms: state.roomReducer.userFavoriteRooms,
+    user: state.userReducer.user
+})
+
+const mapActionsToProps = {
+    addFavRoom,
+    delFavRoom
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(RoomDetailsScreen)
