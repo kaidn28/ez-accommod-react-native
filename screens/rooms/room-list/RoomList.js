@@ -1,8 +1,8 @@
 import React from 'react'
-import { SafeAreaView , FlatList, Text } from 'react-native'
-import {connect} from 'react-redux'
+import { SafeAreaView, FlatList, Text } from 'react-native'
+import { connect } from 'react-redux'
 
-import {addFavRoom, delFavRoom} from '../../../store/actions/roomActions'
+import { addFavRoom, delFavRoom } from '../../../store/actions/roomActions'
 import RoomListItem from './RoomListItem'
 import roomServices from '../../../api/services/roomServices'
 
@@ -10,7 +10,7 @@ import mainStyles from '../../../styles/mainStyles'
 import itemStyles from '../../../styles/roomStyles/roomListStyles'
 
 class RoomList extends React.Component {
-    renderItem = ({item}) => {
+    renderItem = ({ item }) => {
         return (<RoomListItem item={item} onToggleFavorite={this.onToggleFavorite} navigation={this.props.navigation} />)
     }
 
@@ -46,7 +46,7 @@ class RoomList extends React.Component {
         try {
             const data = await roomServices.favoriteRoom({ post_id: roomId })
 
-            this.props.addFavRoom({roomId})
+            this.props.addFavRoom({ roomId })
 
             this.toggleFavorited(roomId)
         } catch (error) {
@@ -61,7 +61,7 @@ class RoomList extends React.Component {
         try {
             const data = await roomServices.removeFavoriteRoom({ post_id: roomId })
 
-            this.props.delFavRoom({roomId})
+            this.props.delFavRoom({ roomId })
 
             this.toggleFavorited(roomId)
         } catch (error) {
@@ -72,7 +72,7 @@ class RoomList extends React.Component {
         }
     }
 
-    render () {
+    render() {
         return (
             <SafeAreaView style={[mainStyles.container, itemStyles.roomList]}>
                 <FlatList
@@ -87,7 +87,6 @@ class RoomList extends React.Component {
         )
     }
 }
-
 const mapStateToProps = state => ({
     isLoggedIn: state.userReducer.isLoggedIn,
     userFavoriteRooms: state.roomReducer.userFavoriteRooms,

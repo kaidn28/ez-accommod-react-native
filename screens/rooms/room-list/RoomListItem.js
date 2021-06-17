@@ -12,11 +12,14 @@ import RoomFacilityList from './RoomFacilityList'
 class RoomListItem extends React.Component {
     getImage = () => {
         if (this.props.item.images[0]) return { uri: this.props.item.images[0] }
+
         return require('../../../assets/room01.jpg')
     }
 
     render() {
-        console.log(this.props.item)
+        const onPressItemHandler = () => {
+            if (this.props.item._id) this.props.navigation.navigate('Details', { id: this.props.item._id })
+        }
         return (
             <View style={itemStyles.container}>
                 <View style={mainStyles.container}>
@@ -28,7 +31,7 @@ class RoomListItem extends React.Component {
                 </View>
 
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Details', { id: this.props.item.item._id })}
+                    onPress={() => onPressItemHandler()}
                 >
 
                     <View style={[mainStyles.centerContainer, itemStyles.roomTypeContainer, mainStyles.horizontalContainer]}>

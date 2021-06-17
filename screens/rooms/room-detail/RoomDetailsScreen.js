@@ -3,15 +3,61 @@ import mainStyles from '../../../styles/mainStyles'
 import itemStyles from '../../../styles/roomStyles/roomListStyles'
 import { Text, View, ScrollView, Image, StyleSheet } from 'react-native'
 import roomServices from '../../../api/services/roomServices'
+import { ROOM_TYPES, CITIES, HANOI_DISTRICTS, HANOI_WARDS, ROOM_FACILITIES } from '../../../consts/consts'
+
+const defaultRoom = {
+    roomTypes: ROOM_TYPES,
+    roomFacilities: ROOM_FACILITIES,
+    cities: CITIES,
+    hanoiDistricts: HANOI_DISTRICTS,
+    hanoiWards: HANOI_WARDS
+}
 
 class RoomDetailsScreen extends React.Component {
+    state = {
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        area: "",
+        address: "",
+        type: "",
+        numbersOfRoom: 0,
+        price: 0,
+        services: [],
+        imageURI: ""
+    }
     id = this.props.route.params.id
     // use this id to fetch detail
     onRoomDetail = async (id) => {
         try {
-            console.log(id)
+
             const data = await roomServices.getRoomDetail({ post_id: id })
-            console.log(data)
+            let detail = data.data.data.post
+            console.log(detail.address.city)
+            const findCity = defaultRoom.cities.find(e => e.id == detail.address.city)
+            const findDistrict = defaultRoom.hanoiDistricts.find(e => e.id == detail.address.district)
+            const findWard = defaultRoom.hanoiWards.find(e => e.id == detail.address.ward)
+
+            const city = findCity ? findCity.name : ''
+            const district = findDistrict ? findDistrict.name : ''
+            const ward = findWard ? findWard.name : ''
+            const road = detail.address.road
+
+            const roomType = defaultRoom.roomTypes.find(e => e.id == detail.type).name || ''
+
+            this.setState({
+                firstName: detail.author.firstName,
+                lastName: detail.author.lastName,
+                phoneNumber: detail.author.phoneNumber,
+                address: `${road}, ${ward}, ${district}, ${city}`,
+                type: roomType,
+                area: detail.rooms[0].area,
+                price: detail.rooms[0].price,
+                numbersOfRoom: detail.rooms[0].number,
+                imageURI: detail.images[0]
+            })
+
+
         } catch (error) {
             console.log(error.response ? error.response.data : error)
         }
@@ -20,29 +66,35 @@ class RoomDetailsScreen extends React.Component {
         this.onRoomDetail(this.id)
     }
     render() {
-        console.log(id)
+
         return (
             <ScrollView>
-                <Image
-                    source={{
-                        uri: 'https://reactnative.dev/docs/assets/p_cat2.png',
-                    }}
-                    style={{ width: 200, height: 200 }}
-                />
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Image
+                        source={{
+                            uri: this.state.imageURI,
+                        }}
+                        style={{
+                            width: 200,
+                            height: 200,
+
+                        }}
+                    />
+                </View>
                 <View>
                     <Text>Thông tin chung</Text>
                     <View style={itemStyles.container}>
                         <View style={mainStyles.horizontalContainer}>
                             <Text style={styles.item}>Họ tên chủ trọ:</Text>
-                            <Text>Nguyen Tran</Text>
+                            <Text>{this.state.lastName + " "}{this.state.firstName}</Text>
                         </View>
                         <View style={mainStyles.horizontalContainer}>
                             <Text style={styles.item}>Số điện thoại liên lạc:</Text>
-                            <Text>0338335441</Text>
+                            <Text>{this.state.phoneNumber}</Text>
                         </View>
                         <View style={mainStyles.horizontalContainer}>
                             <Text style={styles.item}>Kiểu phòng cho thuê:</Text>
-                            <Text>Phòng trọ</Text>
+                            <Text>{this.state.type}</Text>
                         </View>
                     </View>
                 </View>
@@ -51,16 +103,15 @@ class RoomDetailsScreen extends React.Component {
                     <View style={itemStyles.container}>
                         <View style={itemStyles.facilityContainer}>
                             <Text style={styles.item}>Diện tích</Text>
-                            <Text>50 m2</Text>
+                            <Text>{this.state.area} m2</Text>
                         </View>
                         <View style={itemStyles.facilityContainer}>
                             <Text style={styles.item}>Số phòng cho thuê</Text>
-                            <Text> 4 phòng</Text>
+                            <Text> {this.state.numbersOfRoom} phòng</Text>
                         </View>
                         <View style={itemStyles.facilityContainer}>
                             <Text style={styles.item}>Địa chỉ</Text>
-                            <Text>123, Chương Dương, Hoàn Kiếm, Hà Nội
-                                Landmark</Text>
+                            <Text>{this.state.address}</Text>
                         </View>
                         <View style={itemStyles.facilityContainer}>
                             <Text style={styles.item}>Cơ sở vật chất</Text>
@@ -76,7 +127,7 @@ class RoomDetailsScreen extends React.Component {
                 </View>
                 <View>
                     <Text>Giá thuê</Text>
-                    <Text style={itemStyles.price}>10.000.000 đồng/tháng</Text>
+                    <Text style={itemStyles.price}>{this.state.price} đồng/tháng</Text>
                 </View>
             </ScrollView>
         )
