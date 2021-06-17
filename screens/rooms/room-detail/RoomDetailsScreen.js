@@ -10,7 +10,7 @@ import { addFavRoom, delFavRoom } from '../../../store/actions/roomActions'
 
 import mainStyles from '../../../styles/mainStyles'
 import itemStyles from '../../../styles/roomStyles/roomListStyles'
-import { Text, View, ScrollView, Image, StyleSheet, SafeAreaView } from 'react-native'
+import { Text, View, ScrollView, Image, StyleSheet, LogBox } from 'react-native'
 import roomServices from '../../../api/services/roomServices'
 import { ROOM_TYPES, CITIES, HANOI_DISTRICTS, HANOI_WARDS, ROOM_FACILITIES } from '../../../consts/consts'
 
@@ -18,6 +18,7 @@ import RoomFacilityList from '../room-list/RoomFacilityList'
 import { defaultColor } from '../../../styles/constStyles'
 import RoomOptionBar from './RoomOptionBar';
 import RoomReportModal from './RoomReportModal';
+import RoomCommentSection from './RoomCommentSection';
 
 const defaultRoom = {
     roomTypes: ROOM_TYPES,
@@ -39,9 +40,12 @@ class RoomDetailsScreen extends React.Component {
         price: 0,
         services: [],
         imageURI: "",
+        reviews: [],
         reportModalVisible: false,
         error: '',
-        reportLoading: false
+        reportLoading: false,
+        commentModalVisible: false,
+        commentLoading: false
     }
     id = this.props.route.params.id
     // use this id to fetch detail
@@ -54,6 +58,8 @@ class RoomDetailsScreen extends React.Component {
         try {
 
             const data = await roomServices.getRoomDetail({ post_id: id })
+            let reviews = data.data.data.reviews
+            console.log(reviews)
             let detail = data.data.data.post
             console.log(detail.address.city)
             const findCity = defaultRoom.cities.find(e => e.id == detail.address.city)
@@ -78,7 +84,8 @@ class RoomDetailsScreen extends React.Component {
                 numbersOfRoom: detail.rooms[0].number,
                 imageURI: detail.images[0],
                 services: detail.rooms[0].services,
-                isFavorited: detail.isFavorited
+                isFavorited: detail.isFavorited,
+                reviews
             })
 
 
@@ -181,8 +188,37 @@ class RoomDetailsScreen extends React.Component {
         return require('../../../assets/room01.jpg')
     }
 
+    onOpenCommentSection = () => {
+        this.setState({commentModalVisible: true})
+        console.log(this.state.reviews)
+    }
+
+    closeCommentModal = () => {
+        this.setState({commentModalVisible: false})
+    }
+
+    onSubmitReview = async ({title, content}) => {
+        this.setState({commentLoading: true})
+        try {
+            let data = {
+                star: 5,
+                title,
+                content
+            }
+            await roomServices.submitReview({ post_id: this.id, data })
+        } catch (error) {
+            console.log(error.response ? error.response.data : error)
+            if (error.response) {
+                this.setState({error: error.response.data})
+            }
+        } finally {
+            this.setState({commentLoading: false})
+        }
+    }
+
     componentDidMount() {
         this.onRoomDetail(this.id)
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     }
 
     render() {
@@ -205,6 +241,7 @@ class RoomDetailsScreen extends React.Component {
                     onReportRoom={this.openReportModal}
                     onToggleFavorite={this.onToggleFavorite}
                     isFavorited={this.state.isFavorited}
+                    onOpenCommentSection={this.onOpenCommentSection}
                 ></RoomOptionBar>
                 <View>
                     <Text style={styles.title}>Thông tin chung</Text>
@@ -261,6 +298,13 @@ class RoomDetailsScreen extends React.Component {
                     onReportRoom={this.onReportRoom}
                     reportLoading={this.state.reportLoading}
                 ></RoomReportModal>
+                <RoomCommentSection
+                    modalVisible={this.state.commentModalVisible}
+                    closeFilterModal={this.closeCommentModal}
+                    items={this.state.reviews}
+                    onSubmitReview={this.onSubmitReview}
+                    commentLoading={this.state.commentLoading}
+                ></RoomCommentSection>
             </ScrollView>
         )
     }

@@ -22,6 +22,13 @@ class RoomOptionBar extends React.Component {
                     color={defaultColor.primary}
                 />
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.option} onPress={this.props.onOpenCommentSection}>
+                <Ionicons
+                    name={'chatbubbles-outline'}
+                    size={25}
+                    color="black"
+                />
+                </TouchableOpacity>
             </View>
         )
     }
