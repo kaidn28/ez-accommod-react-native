@@ -5,6 +5,7 @@ import MenuScreen from '../screens/users/profile/MenuScreen'
 import UserLoginScreen from '../screens/users/login/UserLoginScreen'
 import UserSignUpScreen from '../screens/users/login/UserSignUpScreen'
 import CreatePostScreen from '../screens/users/owner/CreatePostScreen'
+import EditPostScreen from '../screens/users/owner/EditPostScreen'
 import ManagePostScreen from '../screens/users/owner/ManagePostScreen'
 import { useSelector } from 'react-redux'
 const UserStackNav = createStackNavigator()
@@ -48,6 +49,13 @@ function UserStackNavConfigs(props){
                         component={CreatePostScreen}
                         options={{
                             title: 'Tạo bài đăng mới'
+                        }}
+                    />
+                      <UserStackNav.Screen
+                        name="EditPost"
+                        component={EditPostScreen}
+                        options={{
+                            title: 'Sửa bài đăng'
                         }}
                     />
                     <UserStackNav.Screen
